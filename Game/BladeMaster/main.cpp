@@ -20,12 +20,13 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 ================================================================ */
 #pragma once
 #include "Engine.h"
+#include "Debug.h"
+#include"Coordinator.h"
+#include"component.h"
+#include"System.h"
 
-Engine * engine = 0;
-
-
-
-
+Engine* engine;
+Coordinator coordinator;
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -40,6 +41,56 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 
+void LoadResource() {
+	EntityID brick = coordinator.CreateEntity();
+	Sprite sprite;
+	sprite.texturePath = L"brick.png";
+	coordinator.AddComponent(brick, sprite, ComponentType::Sprite);
+
+	Position pos;
+	pos.x = 30.0f;
+	pos.y = 10.0f;
+	coordinator.AddComponent(brick, pos, ComponentType::Position);
+	
+	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
+	graphicSystem->AddEntity(brick);
+	graphicSystem->LoadTexture();
+}
+/*
+	Update world status for this frame
+	dt: time period between beginning of last frame and beginning of this frame
+
+	IMPORTANT: no render-related code should be used inside this function.
+*/
+void Update(DWORD dt) {
+
+}
+
+/*
+	Render a frame
+	IMPORTANT: world status must NOT be changed during rendering
+*/
+void Render() {
+	LPDIRECT3DDEVICE9 d3ddv = engine->GetDirect3DDevice();
+	LPDIRECT3DSURFACE9 bb = engine->GetBackBuffer();
+	LPD3DXSPRITE spriteHandler = engine->GetSpriteHandler();
+	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
+	if (d3ddv->BeginScene())
+	{
+		// Clear back buffer with a color
+		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+
+		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+
+		graphicSystem->Render();
+
+		spriteHandler->End();
+		d3ddv->EndScene();
+	}
+
+	// Display back buffer content to the screen
+	d3ddv->Present(NULL, NULL, NULL, NULL);
+}
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
 	WNDCLASSEX wc;
@@ -96,7 +147,6 @@ int Run()
 	int done = 0;
 	DWORD frameStart = GetTickCount();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-
 	while (!done)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -116,8 +166,8 @@ int Run()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
-			engine->Update(dt);
-			engine->Render();
+			Update(dt);
+			Render();
 		}
 		else
 			Sleep(tickPerFrame - dt);
@@ -130,8 +180,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	hWnd = CreateGameWindow(hInstance, nCmdShow, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (hWnd == 0) return 0;
-	engine = new Engine(hWnd);
-
+	engine = Engine::GetInstance();
+	engine->InitDirectX(hWnd);
+	LoadResource();
 	Run();
 
 	return 0;
