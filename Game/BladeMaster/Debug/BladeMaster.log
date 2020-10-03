@@ -1,2 +1,10 @@
-﻿  main.cpp
+﻿  ComponentManager.cpp
+  SystemManager.cpp
+  main.cpp
+  System.cpp
+  Generating Code...
+E:\Project\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(46): warning C4172: returning address of local variable or temporary
+E:\Project\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(46): warning C4172: returning address of local variable or temporary
+E:\Project\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(43): warning C4172: returning address of local variable or temporary
+E:\Project\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(43): warning C4172: returning address of local variable or temporary
   BladeMaster.vcxproj -> E:\Project\BlasterMaster-NMGame-\Game\Debug\BladeMaster.exe

@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/js"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-158025955-1');
+    </script>
+    <meta charset="utf-8">
+    <title>How to make a simple entity-component-system in C++</title>
+    <link rel="stylesheet" type="text/css" href="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/main.css">
+    <link rel="stylesheet" href="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/css.css" rel="stylesheet">   
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>How to make a simple entity-component-system in C++ | David Colson’s Blog</title>
+<meta name="generator" content="Jekyll v3.8.7">
+<meta property="og:title" content="How to make a simple entity-component-system in C++">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A quick look at how I made the simple entity-component-system implementation I could in my own game engine, and some future improvements you could make.">
+<meta property="og:description" content="A quick look at how I made the simple entity-component-system implementation I could in my own game engine, and some future improvements you could make.">
+<link rel="canonical" href="https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html">
+<meta property="og:url" content="https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html">
+<meta property="og:site_name" content="David Colson’s Blog">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2020-02-09T11:10:23+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="How to make a simple entity-component-system in C++">
+<meta name="twitter:site" content="@dave_colson">
+<script type="application/ld+json">
+{"dateModified":"2020-02-09T11:10:23+00:00","datePublished":"2020-02-09T11:10:23+00:00","@type":"BlogPosting","headline":"How to make a simple entity-component-system in C++","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html"},"url":"https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html","description":"A quick look at how I made the simple entity-component-system implementation I could in my own game engine, and some future improvements you could make.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://www.david-colson.com/assets/images/ProfilePic.jpg"}},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+  </head>
+  <body>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-md-2 pr-md-4">
+          <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/ProfilePic.JPG" style="height: 60px; margin-top: 5px;" class="rounded-circle img-fluid mx-auto d-block float-md-right" alt=" ">
+        </div>
+        <div class="col">
+          <h4 class="font-weight-bold text-center text-md-left">David Colson</h4>
+          <h6 class="font-italic text-muted text-center text-md-left">Game Development | Physics</h6>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-12 col-md-2 p-0">
+  <nav class="navbar navbar-expand flex-row justify-content-center pb-0 flex-md-column align-items-md-end">
+    
+      <a href="https://www.david-colson.com/" class="nav-item nav-link text-md-right">
+        <h6>Home</h6>
+      </a>
+    
+      <a href="https://www.david-colson.com/about.html" class="nav-item nav-link text-md-right">
+        <h6>About</h6>
+      </a>
+    
+      <a href="https://www.david-colson.com/resources.html" class="nav-item nav-link text-md-right">
+        <h6>Resources</h6>
+      </a>
+    
+  </nav>
+  <nav class="navbar navbar-expand flex-row justify-content-center pt-0 flex-md-column align-items-md-end pt-md-2">
+    <a href="https://twitter.com/dave_colson" class="nav-item nav-link">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://github.com/davidcolson" class="nav-item nav-link">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/colsondavid/" class="nav-item nav-link">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+  </nav>
+</div>
+        <div class="col col-md-8">
+          <h1 class="display-4">How to make a simple entity-component-system in C++</h1>
+<h6 class="text-muted mb-5">Posted 09 Feb 2020 | Share: 
+  <a class="text-decoration-none" href="https://twitter.com/intent/tweet?text=How%20to%20make%20a%20simple%20entity-component-system%20in%20C++&amp;url=https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html&amp;via=dave_colson&amp;related=dave_colson" rel="nofollow" target="_blank" title="Share on Twitter">
+    <i class="align-middle pl-2 fab fa-twitter-square"></i>
+  </a>
+  <a class="text-decoration-none" href="https://facebook.com/sharer/sharer.php?u=https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html" rel="nofollow" target="_blank" title="Share on Facebook">
+    <i class="align-middle pl-2 fab fa-facebook-square"></i>
+  </a>
+  <a class="text-decoration-none" href="http://www.reddit.com/submit?url=https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html&amp;title=How%20to%20make%20a%20simple%20entity-component-system%20in%20C++" rel="nofollow" target="_blank" title="Share on Reddit">
+    <i class="align-middle pl-2 fab fa-reddit-square"></i>
+  </a>
+</h6>
+
+<p></p><p>Entity-Component-System (ECS) is a type of game architecture that focuses on composing <em>entities</em> with data only <em>components</em>, and processing logic separately in <em>systems</em>.
+ Though, while working on my own little game engine, I noticed that a 
+lot of the methods presented for implementing ECS frameworks are not 
+trivial.</p>
+
+<p>Often using this type of architecture people become obsessed with 
+speed and efficiency, and don’t get me wrong, this is a goal. But it 
+shouldn’t be your primary goal, especially making small games. In trying
+ to get the best performance you often end up making something 
+overcomplicated, which just isn’t going to make your life easier. This 
+frustrated me, I like simple solutions, partly because they’re easier to
+ work with, but also because they’re easier to tailor to my specific 
+problems.</p>
+
+<p>In this article I’ll briefly go over the ECS framework, and then dive into how to create a very simple version of it.</p>
+
+<h1 id="what-is-an-entity-component-system-framework-and-why-should-i-care">What is an Entity-Component-System framework and why should I care?</h1>
+
+<p>You might be familiar with the more object oriented approach to 
+component systems. In which entities, or game-objects are bags that 
+store a list of components. These components supply some data and 
+behavior to the entity. This has a couple of problems. You could take 
+one entity at a time, looping over each component. This makes certain 
+kinds of optimizations hard though, like multithreading. Also you end up
+ jumping around in memory as you go between each entity and likely 
+between each component.</p>
+
+<p>Another option is to update all components of a specific type, but 
+because each entity owns the component data, they’re stored in different
+ places in memory. So as you process each component you’re jumping 
+around in memory again.</p>
+
+<figure class="figure text-center">
+  <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/Figure1.png" class="figure-img rounded img-fluid pb-md-3 pr-md-5 " alt="figure1">
+  <figcaption class="figure-caption">Memory layout for components stored inside each entity.</figcaption>
+</figure>
+
+<p>You could take ownership of the component data away from the 
+entities, and store them in contiguous memory for each type, and then 
+each entity stores a list of pointers to components it’s tied to. This 
+is definitely better for performance, assuming you’re updating 
+components per type. With regards to code organisation though, this 
+still isn’t ideal.</p>
+
+<figure class="figure text-center">
+  <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/Figure2.png" class="figure-img rounded img-fluid pb-md-3 pr-md-5 " alt="figure1">
+  <figcaption class="figure-caption">Components of same type are now contiguous, and we store pointers to them.</figcaption>
+</figure>
+
+<p>A core idea in object-oriented programming is that data is 
+encapsulated in objects that operate on that data. But in games, 
+entities have data that a huge amount of systems are interested in. The 
+position of an entity for example is used by the graphics system, 
+physics system, AI system, etc etc. What happens in practice is that the
+ data is shared between many systems, coupling them together and 
+breaking the encapsulation that is core to OOP. If done incorrectly this
+ can lead messy code. ECS solve this by separating the data and the 
+logic.</p>
+
+<p>With ECS, an entity just becomes an index that lets you look up 
+components assigned to that entity. The logic then moves out, and it 
+operates on the components. An entity becomes a loose concept at this 
+point as most systems only operate on subsets of components. This gives 
+us massive opportunity to optimize our data access for the specific 
+problem the system is trying to solve, this is the actual beauty of this
+ architecture, and what I’d like to focus on with this implementation of
+ an ECS framework.</p>
+
+<figure class="figure text-center">
+  <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/Figure3.png" class="figure-img rounded img-fluid pb-md-3 pr-md-5 " alt="figure1">
+  <figcaption class="figure-caption">Components of same type are still contiguous, and entities are just id numbers.</figcaption>
+</figure>
+
+<h1 id="how-does-this-implementation-work">How does this implementation work?</h1>
+
+<p>The core idea with the approach we’ll be taking is that each entity 
+is just an ID number and a bitmask. Each component has an type ID, and 
+we can use the bitmask to find out what components an entity has.</p>
+
+<div class="card mb-3 aside">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-1 text-primary d-flex align-items-center justify-content-center"><i class="fas fa-exclamation"></i></div>
+      <div class="col pl-0">
+        Note that this is just one way to implement an ECS framework, I talk about a few others at the end of the article.
+      </div>
+    </div>
+  </div>
+</div>
+
+<figure class="figure text-center">
+  <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/Figure4.png" class="figure-img rounded img-fluid pb-md-3 pr-md-5 " alt="figure1">
+  <figcaption class="figure-caption">Components pools store the actual data, bitmasks store what entities own what components.</figcaption>
+</figure>
+
+<p>The components are stored in plain old memory pools, and we can use 
+the entity index to retrieve the actual component data. The scene view 
+wraps an iterator which will loop through the entities, checking which 
+have the correct component mask, and returning those entity IDs.</p>
+
+<h1 id="using-the-ecs-framework-well-make">Using the ECS framework we’ll make</h1>
+
+<p>Hopefully we’re all on the same page as to what an ECS is. Before we 
+get into implementing it lets take a look at what it’s like to use an 
+ECS, and by extension what we’re aiming to have at the end of the 
+article.</p>
+
+<p>Components are just plain old data, so creating them is super simple.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Transform</span>
+<span class="p">{</span>
+  <span class="n">vec3</span> <span class="n">pos</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">Shape</span>
+<span class="p">{</span>
+  <span class="n">vec3</span> <span class="n">color</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>We then create a scene, which will contain our database of components
+ and help us access and manage it. We can create new entities, which 
+returns an EntityID, just a number. And then assign components to each 
+entity.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Scene</span> <span class="n">scene</span><span class="p">;</span>
+
+<span class="c1">// To create entities and assign entities to them do this:</span>
+<span class="n">EntityID</span> <span class="n">triangle</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">NewEntity</span><span class="p">();</span>
+<span class="n">Transform</span><span class="o">*</span> <span class="n">pTransform</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">Assign</span><span class="o">&lt;</span><span class="n">Transform</span><span class="o">&gt;</span><span class="p">(</span><span class="n">triangle</span><span class="p">);</span>
+<span class="n">Shape</span><span class="o">*</span> <span class="n">pShape</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">Assign</span><span class="o">&lt;</span><span class="n">Shape</span><span class="o">&gt;</span><span class="p">(</span><span class="n">triangle</span><span class="p">);</span>
+
+<span class="n">EntityID</span> <span class="n">circle</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">NewEntity</span><span class="p">();</span>
+<span class="n">scene</span><span class="p">.</span><span class="n">Assign</span><span class="o">&lt;</span><span class="n">Shape</span><span class="o">&gt;</span><span class="p">(</span><span class="n">circle</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Systems are just functions. You provide them with the scene, and they can “view” a section of the scene with a <code class="language-plaintext highlighter-rouge">SceneView</code>, providing what components they’re interested in. You then do whatever processing the system needs to do.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">ShipControlSystemUpdate</span><span class="p">(</span><span class="n">Scene</span><span class="o">&amp;</span> <span class="n">scene</span><span class="p">,</span> <span class="kt">float</span> <span class="n">deltaTime</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Loop over the entities you're interested in</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">EntityID</span> <span class="n">ent</span> <span class="o">:</span> <span class="n">SceneView</span><span class="o">&lt;</span><span class="n">Transform</span><span class="p">,</span> <span class="n">CShape</span><span class="o">&gt;</span><span class="p">(</span><span class="n">scene</span><span class="p">))</span>
+  <span class="p">{</span>
+    <span class="n">Transform</span><span class="o">*</span> <span class="n">pTransform</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Transform</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ent</span><span class="p">);</span>
+    <span class="n">Shape</span><span class="o">*</span> <span class="n">pShape</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Shape</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ent</span><span class="p">);</span>
+
+    <span class="c1">// Do stuff</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// Update the system by simply calling it with the current scene</span>
+<span class="n">ShipControlSystem</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">deltaTime</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h1 id="the-details">The details</h1>
+
+<p>Lets start with component IDs. We need a way to numerically identify 
+each component type such that we can set their place in a bitmask. A way
+ to do this is with a static counter for each type specialization of a 
+function.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="kt">int</span> <span class="n">s_componentCounter</span><span class="p">;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">&gt;</span>
+<span class="kt">int</span> <span class="nf">GetId</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">static</span> <span class="kt">int</span> <span class="n">s_componentId</span> <span class="o">=</span> <span class="n">s_componentCounter</span><span class="o">++</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">s_componentId</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Define <code class="language-plaintext highlighter-rouge">int s_componentCounter = 0;</code>, and then we can use it like this:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">TransformComponent</span>
+<span class="p">{</span>
+  <span class="kt">float</span> <span class="n">position</span><span class="p">{</span> <span class="mf">1.0</span><span class="n">f</span> <span class="p">};</span>
+  <span class="kt">float</span> <span class="n">rotation</span><span class="p">{</span> <span class="mf">2.0</span><span class="n">f</span> <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"TransformComponent ID: %i</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">GetId</span><span class="o">&lt;</span><span class="n">TransformComponent</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Each time you call this on a new component type you’ll get another unique ID number.</p>
+
+<p>Moving on, we need info about our entities. Entities are just an ID 
+number, and a bitmask, so lets store that info in our new Scene type.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Some typedefs to aid in reading</span>
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">EntityID</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">MAX_COMPONENTS</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">bitset</span><span class="o">&lt;</span><span class="n">MAX_COMPONENTS</span><span class="o">&gt;</span> <span class="n">ComponentMask</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">Scene</span>
+<span class="p">{</span>
+  <span class="c1">// All the information we need about each entity</span>
+  <span class="k">struct</span> <span class="nc">EntityDesc</span>
+  <span class="p">{</span>
+    <span class="n">EntityID</span> <span class="n">id</span><span class="p">;</span>
+    <span class="n">ComponentMask</span> <span class="n">mask</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">EntityDesc</span><span class="o">&gt;</span> <span class="n">entities</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>You may ask why we need to store the ID as well, as it’s also the 
+index into the vector itself. This has to do with how we’re going to 
+deal with deleting entities, I’ll get back to that later, but for now 
+don’t worry about it.</p>
+
+<p>Creating entities is as simple as adding a new element to the list of entities:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EntityID</span> <span class="nf">NewEntity</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">entities</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span> <span class="n">entities</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">ComponentMask</span><span class="p">()</span> <span class="p">});</span>
+  <span class="k">return</span> <span class="n">entities</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">id</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Assigning a component to an entity is also really simple at this 
+point, we just set the bit corresponding to that component in that 
+entities mask.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">Assign</span><span class="p">(</span><span class="n">EntityID</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">componentId</span> <span class="o">=</span> <span class="n">GetId</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">entities</span><span class="p">[</span><span class="n">id</span><span class="p">].</span><span class="n">mask</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">componentId</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Likewise removing a component is as simple as unsetting that bit. Now we have some basic tools available to us.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Scene</span> <span class="n">scene</span><span class="p">;</span>
+
+<span class="n">EntityID</span> <span class="n">newEnt</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">NewEntity</span><span class="p">();</span>
+<span class="n">scene</span><span class="p">.</span><span class="n">Assign</span><span class="o">&lt;</span><span class="n">TransformComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">newEnt</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Obviously no actual component data was created, that’s our next step. We need a memory pool to store the component data.</p>
+
+<h2 id="component-pools">Component Pools</h2>
+
+<p>Component pools are nothing but memory pools, nothing really special.
+ We store an array of char, since we don’t know the size of the pool at 
+compile time. We dynamically create and destroy the entire pool. We’ll 
+manually construct objects inside the pool when assigning components to 
+entities. other than that we give you a nicer way to get the data at a 
+specific index.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">ComponentPool</span>
+<span class="p">{</span>
+  <span class="n">ComponentPool</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">elementsize</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// We'll allocate enough memory to hold MAX_ENTITIES, each with element size</span>
+    <span class="n">elementSize</span> <span class="o">=</span> <span class="n">elementsize</span><span class="p">;</span>
+    <span class="n">pData</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">elementSize</span> <span class="o">*</span> <span class="n">MAX_ENTITIES</span><span class="p">];</span>
+  <span class="p">}</span>
+
+  <span class="o">~</span><span class="n">ComponentPool</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="k">delete</span><span class="p">[]</span> <span class="n">pData</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">inline</span> <span class="kt">void</span><span class="o">*</span> <span class="n">get</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">index</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// looking up the component at the desired index</span>
+    <span class="k">return</span> <span class="n">pData</span> <span class="o">+</span> <span class="n">index</span> <span class="o">*</span> <span class="n">elementSize</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">char</span><span class="o">*</span> <span class="n">pData</span><span class="p">{</span> <span class="nb">nullptr</span> <span class="p">};</span>
+  <span class="kt">size_t</span> <span class="n">elementSize</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
+
+<div class="card mb-3 aside">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-1 text-primary d-flex align-items-center justify-content-center"><i class="fas fa-exclamation"></i></div>
+      <div class="col pl-0">
+        Note that this is intentionally very bare bones. Scenes manage component pools and will ensure type correctness etc.
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Now when we assign a component to an entity, we can actually prepare 
+data for the component in a memory pool. First though, lets give the 
+scene a list of pools, one for each component type. We can index this 
+array using the component IDs we created earlier. Just a simple <code class="language-plaintext highlighter-rouge">std::vector&lt;ComponentPool&gt; componentPools;</code> inside the Scene struct.</p>
+
+<p>When we assign a component we have a few things to do. First, we 
+check if there is a pool for this component. If not we resize the vector
+ of pools. Usually we also need to create a new pool for this component 
+as well. Second, we can use the placement new operator to call the 
+constructor of the component at the correct memory location in the pool.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
+<span class="n">T</span><span class="o">*</span> <span class="nf">Assign</span><span class="p">(</span><span class="n">EntityID</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">componentId</span> <span class="o">=</span> <span class="n">GetId</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">componentPools</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">componentId</span><span class="p">)</span> <span class="c1">// Not enough component pool</span>
+  <span class="p">{</span>
+    <span class="n">componentPools</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">componentId</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">nullptr</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">componentPools</span><span class="p">[</span><span class="n">componentId</span><span class="p">]</span> <span class="o">==</span> <span class="nb">nullptr</span><span class="p">)</span> <span class="c1">// New component, make a new pool</span>
+  <span class="p">{</span>
+    <span class="n">componentPools</span><span class="p">[</span><span class="n">componentId</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComponentPool</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Looks up the component in the pool, and initializes it with placement new</span>
+  <span class="n">T</span><span class="o">*</span> <span class="n">pComponent</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="n">componentPools</span><span class="p">[</span><span class="n">componentId</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">(</span><span class="n">id</span><span class="p">))</span> <span class="n">T</span><span class="p">();</span>
+
+  <span class="c1">// Set the bit for this component to true and return the created component</span>
+  <span class="n">entities</span><span class="p">[</span><span class="n">id</span><span class="p">].</span><span class="n">mask</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">componentId</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">pComponent</span><span class="p">;</span>
+<span class="p">}</span> 
+</code></pre></div></div>
+
+<p>Lastly, we’ll set the bitmask for that entity, and return the newly 
+created component for use. Now we’re getting somewhere. Given an 
+EntityID you can also retrieve the component very easily with a function
+ like this in the Scene structure:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
+<span class="n">T</span><span class="o">*</span> <span class="nf">Get</span><span class="p">(</span><span class="n">EntityID</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">componentId</span> <span class="o">=</span> <span class="n">GetId</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">entities</span><span class="p">[</span><span class="n">id</span><span class="p">].</span><span class="n">mask</span><span class="p">.</span><span class="n">test</span><span class="p">(</span><span class="n">componentId</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">nullptr</span><span class="p">;</span>
+
+  <span class="n">T</span><span class="o">*</span> <span class="n">pComponent</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">componentPools</span><span class="p">[</span><span class="n">componentId</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+  <span class="k">return</span> <span class="n">pComponent</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="card mb-3 aside">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-1 text-primary d-flex align-items-center justify-content-center"><i class="fas fa-exclamation"></i></div>
+      <div class="col pl-0">
+        Take note that we test the bitmask before accessing the 
+component pool. If you've removed a component by unsetting its bit, this
+ will prevent you accessing component data that's not supposed to be 
+assigned to this entity.
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>We’ve achieved quite a lot, and so far the example is less than 100 
+lines of code. You could even use this as a bare bones ECS framework at 
+this point. Systems would have to manually loop over the list of 
+entities, checking the bitmask on every entity, which isn’t ideal, but 
+it would work. There is one important missing feature though, deleting 
+entities.</p>
+
+<h2 id="destroying-entities">Destroying entities</h2>
+
+<p>This might seem straightforward at first, you just remove the entity 
+from the list of component masks. The problem is, when you create a new 
+entity afterward, it’ll be in the same slot as a previously deleted 
+entity. A reference to the old entity could attempt to access data, and 
+end up accidentally accessing data from the new entity. These are 
+subtle, scary bugs, so we’ll protect against them by adding an extra 
+piece of info to entity IDs, a version number.</p>
+
+<p>The idea is pretty simple, we have a 64 bit entity ID. So we’ll store
+ the index of the entity in the top 32 bits, and the version number in 
+the bottom 32 bits. We can wrap up these operations with some simple 
+functions.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">EntityIndex</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">EntityVersion</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">EntityID</span><span class="p">;</span>
+
+<span class="kr">inline</span> <span class="n">EntityID</span> <span class="nf">CreateEntityId</span><span class="p">(</span><span class="n">EntityIndex</span> <span class="n">index</span><span class="p">,</span> <span class="n">EntityVersion</span> <span class="n">version</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Shift the index up 32, and put the version in the bottom</span>
+  <span class="k">return</span> <span class="p">((</span><span class="n">EntityID</span><span class="p">)</span><span class="n">index</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">EntityID</span><span class="p">)</span><span class="n">version</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="n">EntityIndex</span> <span class="nf">GetEntityIndex</span><span class="p">(</span><span class="n">EntityID</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Shift down 32 so we lose the version and get our index</span>
+  <span class="k">return</span> <span class="n">id</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="n">EntityVersion</span> <span class="nf">GetEntityVersion</span><span class="p">(</span><span class="n">EntityID</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Cast to a 32 bit int to get our version number (loosing the top 32 bits)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">EntityVersion</span><span class="p">)</span><span class="n">id</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">IsEntityValid</span><span class="p">(</span><span class="n">EntityID</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Check if the index is our invalid index</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">id</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span><span class="p">)</span> <span class="o">!=</span> <span class="n">EntityIndex</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#define INVALID_ENTITY CreateEntityId(EntityIndex(-1), 0)
+</span></code></pre></div></div>
+
+<p>This means all entity IDs are unique, assuming you don’t wrap around 
+the 32 bit number. Which I feel is unlikely for indie game projects. We 
+need to make some modifications to our older functions now to deal with 
+this change. Anywhere we treated the ID as an index, we replace with <code class="language-plaintext highlighter-rouge">GetEntityIndex(id)</code>. And we can add some additional checks to ensure we’re using the correct entity.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">Remove</span><span class="p">(</span><span class="n">EntityID</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// ensures you're not accessing an entity that has been deleted</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">entities</span><span class="p">[</span><span class="n">GetEntityIndex</span><span class="p">(</span><span class="n">id</span><span class="p">)].</span><span class="n">id</span> <span class="o">!=</span> <span class="n">id</span><span class="p">)</span> 
+    <span class="k">return</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="n">componentId</span> <span class="o">=</span> <span class="n">GetId</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">entities</span><span class="p">[</span><span class="n">GetEntityIndex</span><span class="p">(</span><span class="n">id</span><span class="p">)].</span><span class="n">mask</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">componentId</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>I’ve added the above check to Remove, Get, and Assign. This is the 
+reason we store the entity ID in alongside the component mask. It means 
+we can very easily check if we’re actually accessing the right entity, 
+as each ID is unique for the duration of execution.</p>
+
+<p>Now we can return to deleting an entity. We don’t really want to 
+adjust the IDs of any existing entities, nor do we want to resize the 
+vector of entity descriptions. Instead we’ll keep a record of what 
+entity IDs are “free” and can be used when creating new entities. This 
+is as simple as a vector of EntityIndex’s, <code class="language-plaintext highlighter-rouge">std::vector&lt;EntityIndex&gt; freeEntities;</code>.</p>
+
+<p>Deleting an entity now amounts to setting the entity slot to an 
+invalid index, and incrementing the version number. Then add another 
+element to the free list. We also clear the mask.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">DestroyEntity</span><span class="p">(</span><span class="n">EntityID</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">EntityID</span> <span class="n">newID</span> <span class="o">=</span> <span class="n">CreateEntityId</span><span class="p">(</span><span class="n">EntityIndex</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">GetEntityVersion</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="n">entities</span><span class="p">[</span><span class="n">GetEntityIndex</span><span class="p">(</span><span class="n">id</span><span class="p">)].</span><span class="n">id</span> <span class="o">=</span> <span class="n">newID</span><span class="p">;</span>
+  <span class="n">entities</span><span class="p">[</span><span class="n">GetEntityIndex</span><span class="p">(</span><span class="n">id</span><span class="p">)].</span><span class="n">mask</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span> 
+  <span class="n">freeEntities</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">GetEntityIndex</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now when we create a new entity, we can check the free list first, and if there is a free entity slot, just reuse that.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EntityID</span> <span class="nf">NewEntity</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">freeEntities</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="n">EntityIndex</span> <span class="n">newIndex</span> <span class="o">=</span> <span class="n">freeEntities</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+    <span class="n">freeEntities</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+    <span class="n">EntityID</span> <span class="n">newID</span> <span class="o">=</span> <span class="n">CreateEntityId</span><span class="p">(</span><span class="n">newIndex</span><span class="p">,</span> <span class="n">GetEntityVersion</span><span class="p">(</span><span class="n">entities</span><span class="p">[</span><span class="n">newIndex</span><span class="p">].</span><span class="n">id</span><span class="p">));</span>
+    <span class="n">entities</span><span class="p">[</span><span class="n">newIndex</span><span class="p">].</span><span class="n">id</span> <span class="o">=</span> <span class="n">newID</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">entities</span><span class="p">[</span><span class="n">newIndex</span><span class="p">].</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">entities</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span> <span class="n">CreateEntityId</span><span class="p">(</span><span class="n">EntityIndex</span><span class="p">(</span><span class="n">entities</span><span class="p">.</span><span class="n">size</span><span class="p">()),</span> <span class="mi">0</span><span class="p">),</span> <span class="n">ComponentMask</span><span class="p">()</span> <span class="p">});</span>
+  <span class="k">return</span> <span class="n">entities</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">id</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Notice that there are two cases for creating a new entity ID. If 
+there is nothing in the free list, we’ll make a new ID with version 
+number 0, if there is something in the free list, we’ll use the version 
+number stored in there. Which we incremented when deleting the entity 
+earlier.</p>
+
+<p>That’s pretty much it! A very basic ECS framework that you can work 
+from and expand to fit your game. There is just one extra thing I’d like
+ to do, a convenience more than anything, and that’s SceneViews.</p>
+
+<h2 id="scene-views">Scene Views</h2>
+
+<p>A scene view is something that wraps up the process of iterating over
+ a set of components. When writing systems it’s a massive help as you 
+can just specify what set of components you’d like to iterate over, and 
+it will return an iterator for that set. Without it you’re faced with 
+manually iterating the <code class="language-plaintext highlighter-rouge">entities</code> vector and checking the component mask of each entity manually for the set you’re interested in.</p>
+
+<p>Our goal here is this interface:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">EntityID</span> <span class="n">ent</span> <span class="o">:</span> <span class="n">SceneView</span><span class="o">&lt;</span><span class="n">Transform</span><span class="p">,</span> <span class="n">CShape</span><span class="o">&gt;</span><span class="p">(</span><span class="n">scene</span><span class="p">))</span>
+<span class="p">{</span>
+  <span class="c1">// Do stuff</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We need to abide by the requirements of a C++ iterator to function like this, the basic minimum being this:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">SceneView</span>
+<span class="p">{</span>
+  <span class="n">SceneView</span><span class="p">()</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="k">struct</span> <span class="nc">Iterator</span>
+  <span class="p">{</span>
+    <span class="n">Iterator</span><span class="p">()</span> <span class="p">{}</span>
+
+    <span class="n">EntityID</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span>
+    <span class="p">{</span>
+      <span class="c1">// give back the entityID we're currently at</span>
+    <span class="p">}</span>
+    
+    <span class="kt">bool</span> <span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span>
+    <span class="p">{</span>
+      <span class="c1">// Compare two iterators</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="k">operator</span><span class="o">!=</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span>
+    <span class="p">{</span>
+      <span class="c1">// Similar to above</span>
+    <span class="p">}</span>
+
+    <span class="n">Iterator</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">++</span><span class="p">()</span>
+    <span class="p">{</span>
+      <span class="c1">// Move the iterator forward</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="k">const</span> <span class="n">Iterator</span> <span class="n">begin</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="c1">// Give an iterator to the beginning of this view</span>
+  <span class="p">}</span>
+
+  <span class="k">const</span> <span class="n">Iterator</span> <span class="n">end</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="c1">// Give an iterator to the end of this view </span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<div class="card mb-3 aside">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-1 text-primary d-flex align-items-center justify-content-center"><i class="fas fa-exclamation"></i></div>
+      <div class="col pl-0">
+        Note that this is the pure minimum spec for an iterator that 
+works for our case, you can define more for different kinds of 
+iterators, like for example ones that can go backward or forward.
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Our job then just becomes filling in this structure to work how we 
+need. Let start with telling the SceneView what components we’re 
+interested in. This requires a variadic template. We’ll use a C++ 11 
+feature called parameter packs, and we’ll unpack it into an initializer 
+list that we can use to set a component mask we store inside the 
+SceneView.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">...</span> <span class="nc">ComponentTypes</span><span class="p">&gt;</span>
+<span class="k">struct</span> <span class="nc">SceneView</span>
+<span class="p">{</span>
+  <span class="n">SceneView</span><span class="p">(</span><span class="n">Scene</span><span class="o">&amp;</span> <span class="n">scene</span><span class="p">)</span> <span class="o">:</span> <span class="n">pScene</span><span class="p">(</span><span class="o">&amp;</span><span class="n">scene</span><span class="p">)</span> 
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">...(</span><span class="n">ComponentTypes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">all</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="c1">// Unpack the template parameters into an initializer list</span>
+      <span class="kt">int</span> <span class="n">componentIds</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span><span class="p">,</span> <span class="n">GetId</span><span class="o">&lt;</span><span class="n">ComponentTypes</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">...</span> <span class="p">};</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">...(</span><span class="n">ComponentTypes</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">componentMask</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">componentIds</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// ... (omitted)</span>
+
+  <span class="n">Scene</span><span class="o">*</span> <span class="n">pScene</span><span class="p">{</span> <span class="nb">nullptr</span> <span class="p">};</span>
+  <span class="n">ComponentMask</span> <span class="n">componentMask</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">all</span><span class="p">{</span> <span class="nb">false</span> <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>I’ve done some extra bits here, namely taking in a reference to the 
+scene, which we’ll need to access the entities, and also if the 
+parameater pack size is 0, then we set a bool to true which lets us skip
+ checking each entity later. It means that a SceneView defined with no 
+parameters like, <code class="language-plaintext highlighter-rouge">SceneView&lt;&gt;(scene)</code>, will just iterate all entities in the scene.</p>
+
+<p>The iterator struct itself need to know everything such that it can 
+move itself along in the scene, so that means it needs the scene itself,
+ the component mask, and whether it’s just testing all. Of course it 
+also needs the EntityIndex of it’s current location in the scene.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Iterator</span>
+<span class="p">{</span>
+  <span class="n">Iterator</span><span class="p">(</span><span class="n">Scene</span><span class="o">*</span> <span class="n">pScene</span><span class="p">,</span> <span class="n">EntityIndex</span> <span class="n">index</span><span class="p">,</span> <span class="n">ComponentMask</span> <span class="n">mask</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">all</span><span class="p">)</span> 
+    <span class="o">:</span> <span class="n">pScene</span><span class="p">(</span><span class="n">pScene</span><span class="p">),</span> <span class="n">index</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="n">mask</span><span class="p">(</span><span class="n">mask</span><span class="p">),</span> <span class="n">all</span><span class="p">(</span><span class="n">all</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="c1">// ... (omitted)</span>
+
+  <span class="n">EntityIndex</span> <span class="n">index</span><span class="p">;</span>
+  <span class="n">Scene</span><span class="o">*</span> <span class="n">pScene</span><span class="p">;</span>
+  <span class="n">ComponentMask</span> <span class="n">mask</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">all</span><span class="p">{</span> <span class="nb">false</span> <span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>We now have pretty much everything we need to start filling out the 
+methods of the iterator. Dereferencing into the actual entityID is very 
+simple, we can just use the index to lookup the ID.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">EntityID</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> 
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">id</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Checking equality with another iterator is also straightforward, just compare the indexes.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">index</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">index</span> <span class="o">||</span> <span class="n">index</span> <span class="o">==</span> <span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kt">bool</span> <span class="k">operator</span><span class="o">!=</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">index</span> <span class="o">!=</span> <span class="n">other</span><span class="p">.</span><span class="n">index</span> <span class="o">&amp;&amp;</span> <span class="n">index</span> <span class="o">!=</span> <span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Incrementing the iterator is where it gets a bit tricker. I spent a 
+while fiddling with this to ensure you don’t get overruns or invalid 
+indexes coming up. Checking for a valid index has been separated into 
+it’s own little helper. We check if the EntityID itself is valid, since 
+the iterator must skip over entities in the free list, and then it 
+checks the mask to see if the entity has the right components.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">ValidIndex</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">return</span>
+    <span class="c1">// It's a valid entity ID</span>
+    <span class="n">IsEntityValid</span><span class="p">(</span><span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">id</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+    <span class="c1">// It has the correct component mask</span>
+    <span class="p">(</span><span class="n">all</span> <span class="o">||</span> <span class="n">mask</span> <span class="o">==</span> <span class="p">(</span><span class="n">mask</span> <span class="o">&amp;</span> <span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">mask</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">Iterator</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">++</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">do</span>
+  <span class="p">{</span>
+    <span class="n">index</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">ValidIndex</span><span class="p">());</span>
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We’re almost there. Only two more functions to implement! We need the SceneView struct itself to return the <code class="language-plaintext highlighter-rouge">begin</code> iterator. Similar to <code class="language-plaintext highlighter-rouge">operator++</code>,
+ we need to check for valid indices, and the component mask, since the 
+first few entities might not have the correct set of components.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">Iterator</span> <span class="n">begin</span><span class="p">()</span> <span class="k">const</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">firstIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">firstIndex</span> <span class="o">&lt;</span> <span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span>
+    <span class="p">(</span><span class="n">componentMask</span> <span class="o">!=</span> <span class="p">(</span><span class="n">componentMask</span> <span class="o">&amp;</span> <span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">[</span><span class="n">firstIndex</span><span class="p">].</span><span class="n">mask</span><span class="p">)</span> 
+      <span class="o">||</span> <span class="o">!</span><span class="n">IsEntityValid</span><span class="p">(</span><span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">[</span><span class="n">firstIndex</span><span class="p">].</span><span class="n">id</span><span class="p">)))</span> 
+  <span class="p">{</span>
+    <span class="n">firstIndex</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">Iterator</span><span class="p">(</span><span class="n">pScene</span><span class="p">,</span> <span class="n">firstIndex</span><span class="p">,</span> <span class="n">componentMask</span><span class="p">,</span> <span class="n">all</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This will loop until the first entity that we’re interested in, and create an iterator of that index.</p>
+
+<p>If this iterator supported going backward, we’d have to do something similar for <code class="language-plaintext highlighter-rouge">end</code>,
+ but it doesn’t so it’s reasonable to just return the highest available 
+entity index. This will stop the iterator from going any further.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">Iterator</span> <span class="nf">end</span><span class="p">()</span> <span class="k">const</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">Iterator</span><span class="p">(</span><span class="n">pScene</span><span class="p">,</span> <span class="n">EntityIndex</span><span class="p">(</span><span class="n">pScene</span><span class="o">-&gt;</span><span class="n">entities</span><span class="p">.</span><span class="n">size</span><span class="p">()),</span> <span class="n">componentMask</span><span class="p">,</span> <span class="n">all</span><span class="p">);</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<p>And that’s it. We’re finished! The initial goal we set out near the 
+start of this article has been achieved, and you can use this as a 
+starting point to make your game. The entire implementation as I’ve 
+described fits in 230 lines of code. You can browse the finished code 
+here, and expand on it for your own use if you so please.</p>
+
+<h1 id="potential-improvements-and-alternatives">Potential improvements and alternatives</h1>
+
+<p>There is one small problem with this implementation, which you may 
+have already noticed. We allocate memory for components that an entity 
+might not be using. Here’s a picture to demonstrate:</p>
+
+<figure class="figure text-center">
+  <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/Figure5.png" class="figure-img rounded img-fluid pb-md-3 pr-md-5 " alt="figure1">
+  <figcaption class="figure-caption">The score component has a lot of unused memory as few entities use it.</figcaption>
+</figure>
+
+<p>As you see, if a certain component is used infrequently, we store 
+enough memory for it to be on every entity, wasting a whole bunch of 
+space. This is a problem, but the truth is, if you’re making small 
+games, this isn’t much of an issue. It’s absolutely a solveable problem,
+ but when you’re making small games, or you’re still trying to 
+understand the problems your game is asking you to solve, this really 
+isn’t a big deal.</p>
+
+<p>The most performance benefit will be had when iterating over more 
+tightly packed components, as there is less jumping around, and those 
+sorts of components are <em>generally</em> the ones that benefit from the performance improvement anyway.</p>
+
+<p>Having said that, if your game is starting to scale, and this is 
+becoming a problem, here are two alternative ways of implementing an ECS
+ that solve this.</p>
+
+<h3 id="sparse-sets">Sparse sets</h3>
+
+<p>A sparse set is a way of mapping sparse indexes to a tightly packed 
+array. It essentially amounts to two lists, one sparsely filled with 
+indexes to the tightly packed list. And the packed list contains indexes
+ back to the sparse list elements. A diagram might help this concept 
+come across.</p>
+
+<figure class="figure text-center">
+  <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/Figure6.png" class="figure-img rounded img-fluid pb-md-3 pr-md-5 " alt="figure1">
+  <figcaption class="figure-caption">A sparse set and how it maps sparse indexes to tightly packed memory.</figcaption>
+</figure>
+
+<p>The way you use this in an ECS is that each component pool has a 
+sparse set assigned to it. The sparse list of indices contains the 
+actual indices in the memory pool that you can retrieve your component 
+data from. The packed array contains a list of entity indices that have a
+ component of this type assigned to them. This way you can do away with 
+the bitmask, and use the sparse set both to access tightly packed 
+memory, and to find out if an entity has a component assigned to it.</p>
+
+<figure class="figure text-center">
+  <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/Figure7.png" class="figure-img rounded img-fluid pb-md-3 pr-md-5 " alt="figure1">
+  <figcaption class="figure-caption">Components can now live tightly packed, and we use the sparse set to access them.</figcaption>
+</figure>
+
+<p>This obviously saves a huge amount of memory, but also component data
+ is tightly packed and so iterating any one component is as fast as you 
+can possibly get.</p>
+
+<p>Another great benefit of this is that if you have a SceneView that 
+iterates over two types of components, you simply loop through the array
+ of the smallest component pool. Thus minimizing the amount of checks on
+ each entity. For large scenes with lots of entities and components this
+ is <em>much</em> faster. Probably as fast as you’ll ever need.</p>
+
+<h3 id="archetypes">Archetypes</h3>
+
+<p>This type of ECS is the one that Unity is using in it’s 
+Data-Oriented-Technology-Stack (DOTS), and so it’s quite popular at the 
+moment. Rather than tightly packing component data, it instead focuses 
+on keeping entities with similar sets of components together in memory. I
+ found this to be the most complicated type of ECS to implement 
+correctly.</p>
+
+<p>The core idea is that all entities that have the same set of 
+components are called an “archetype”, and are stored together in a 
+contiguous array. Iterating over entities with a particular set of 
+components, then becomes a case of iterating over the archetypes and 
+then giving back all the entities in those matching archetypes. Assuming
+ the amount of archetypes is much much less than the number of entities 
+(you’d hope this is the case), iterating becomes extremely fast. There’s
+ very little checking to do, and data is quite close together.</p>
+
+<figure class="figure text-center">
+  <img src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/Figure8.png" class="figure-img rounded img-fluid pb-md-3 pr-md-5 " alt="figure1">
+  <figcaption class="figure-caption">Each archetye has it's own memory pool where it stores the components for each entity in that archetype.</figcaption>
+</figure>
+
+<p>The downside to this is that adding and removing components from 
+entities involves moving all the component data for that entity from one
+ pool to another. Ideally you would structure your game so as to 
+minimize the amount of component changes, and minimize the number of 
+archetypes. Executing on this idea efficiently is not trivial, and I 
+have not successfully implemented it myself.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>My goal with this article was to give you a stepping stone to make 
+your own small games with an ECS that you could easily adapt to your 
+specific needs. You get the benefits of a game structured in this way, 
+without the complexity that often comes with writing ECS frameworks. 
+Hopefully I’ve achieved that. If you have any questions or suggestions 
+let me know through my twitter @davecolson.</p>
+
+<p></p>
+
+<div class="border-bottom"></div>
+        </div>
+        <div class="col-12 col-lg-2"></div>
+      </div>
+      <div class="row">
+  <div class="col-12 col-md-2 p-0"></div>
+  <div class="col">
+    <div class="p-5 text-center"> David Colson © 2019 </div>
+  </div>
+  <div class="col-12 col-lg-2"></div>
+</div>
+<!-- JS -->
+<script src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/jquery-3.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/popper.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/bootstrap.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="How%20to%20make%20a%20simple%20entity-component-system%20in%20C++_files/bootstrap_002.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    </div>
+  
+</body></html>

@@ -21,9 +21,9 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #pragma once
 #include "Engine.h"
 #include "Debug.h"
-#include"Coordinator.h"
-#include"component.h"
-#include"System.h"
+#include"Core/Coordinator.h"
+#include"Component/component.h"
+#include"System/System.h"
 
 Engine* engine;
 Coordinator coordinator;
