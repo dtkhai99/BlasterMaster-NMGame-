@@ -6,6 +6,7 @@
 
 enum class SystemType {
 	Graphic = 0,
+	Input
 };
 
 class SystemManager

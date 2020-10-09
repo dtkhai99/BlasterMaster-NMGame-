@@ -23,7 +23,7 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include "Debug.h"
 #include"Core/Coordinator.h"
 #include"Component/component.h"
-#include"System/System.h"
+#include"System/GraphicSystem.h"
 
 Engine* engine;
 Coordinator coordinator;
