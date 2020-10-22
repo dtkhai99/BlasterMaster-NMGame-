@@ -21,12 +21,17 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #pragma once
 #include "Engine.h"
 #include "Debug.h"
-#include"Core/Coordinator.h"
-#include"Component/component.h"
-#include"System/GraphicSystem.h"
+#include "Core/Coordinator.h"
+#include "Component/component.h"
+#include "System/GraphicSystem.h"
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 Engine* engine;
 Coordinator coordinator;
+EntityID tileset[150];
+
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -41,8 +46,9 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 
-void LoadResource() {
-	EntityID brick = coordinator.CreateEntity();
+void LoadResource() 
+{
+	/*EntityID brick = coordinator.CreateEntity();
 	Sprite sprite;
 	sprite.texturePath = L"brick.png";
 	coordinator.AddComponent(brick, sprite, ComponentType::Sprite);
@@ -54,7 +60,79 @@ void LoadResource() {
 	
 	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
 	graphicSystem->AddEntity(brick);
-	graphicSystem->LoadTexture();
+	graphicSystem->LoadTexture();*/
+
+	int count = 0;
+	Position pos[150];
+	SpritePos sp[150];
+
+	Sprite sprite_map;
+	sprite_map.texturePath = L"lvl2_side.png";
+
+	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
+
+	//why dafug len entity 131 lai ko cho doc
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 12; j++)
+		{
+			tileset[count] = coordinator.CreateEntity();
+
+			coordinator.AddComponent(tileset[count], sprite_map, ComponentType::Sprite);
+
+			pos[count].x = j * 16;
+			pos[count].y = i *16;
+			coordinator.AddComponent(tileset[count], pos[count], ComponentType::Position);
+
+			sp[count].left = j * 16;
+			sp[count].top = i * 16;
+			sp[count].right = j * 16 + 16;
+			sp[count].bottom = i*16 + 16;
+			coordinator.AddComponent(tileset[count], sp[count], ComponentType::SpritePos);
+
+			graphicSystem->AddEntity(tileset[count]);
+			graphicSystem->LoadTexture();
+
+			count++;
+		}
+	}
+
+	/*int a[1000];
+	int b;
+	int temp = 0;
+	int i = 0;
+
+	ifstream infile;
+	infile.open("lvl2_side_tilemap.txt");
+	if (!infile)
+	{
+		cout << "Unable to open file";
+		exit(1);
+	}
+	while (infile>>b && i<10)
+	{
+		a[i] = b;
+		i++;
+	}
+
+	infile.close();
+	for (int i = 0; i < 10; i++)
+	{
+		cout << a[i]<<" ";
+	}*/
+
+	/*texturedatabase.ReadData(sprite_map.texturePath);
+	LPDIRECT3DTEXTURE9 texMap = sprite_map.texturePath;
+	LPD3DXSPRITE spriteHandler = engine->GetSpriteHandler();
+	D3DXVECTOR3 p(0, 0, 0);
+	RECT r;
+	r.left = 0;
+	r.top = 0;
+	r.right = 16;
+	r.bottom = 16;
+	spriteHandler->Draw(, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));*/
+
+	
 }
 /*
 	Update world status for this frame
@@ -70,6 +148,7 @@ void Update(DWORD dt) {
 	Render a frame
 	IMPORTANT: world status must NOT be changed during rendering
 */
+
 void Render() {
 	LPDIRECT3DDEVICE9 d3ddv = engine->GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 bb = engine->GetBackBuffer();
@@ -81,7 +160,8 @@ void Render() {
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-
+		
+		
 		graphicSystem->Render();
 
 		spriteHandler->End();
@@ -183,7 +263,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	engine = Engine::GetInstance();
 	engine->InitDirectX(hWnd);
 	LoadResource();
-	Run();
+	Run();	
 
 	return 0;
 }

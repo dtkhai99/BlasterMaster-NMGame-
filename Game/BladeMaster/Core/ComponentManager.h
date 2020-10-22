@@ -3,7 +3,8 @@
 #include<memory>
 enum class ComponentType {
 	Sprite = 0,
-	Position
+	Position,
+	SpritePos
 };
 
 class ComponentManager

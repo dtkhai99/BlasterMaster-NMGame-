@@ -1,0 +1,182 @@
+﻿  ComponentManager.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [22]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(60): message : see reference to class template instantiation 'ComponentArray<T>' being compiled
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [21]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [21]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::RegisterComponent(ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::AddComponent(EntityID,T,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::RemoveComponent(EntityID,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,12): message : This diagnostic occurred in the compiler generated function 'T &ComponentManager::GetComponent(EntityID,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,12): message : This diagnostic occurred in the compiler generated function 'std::shared_ptr<ComponentArray<T>> ComponentManager::GetComponentArray(ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Component\component.h(3,10): fatal error C1083: Cannot open include file: 'd3dx9.h': No such file or directory
+  EntityManager.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\EntityManager.cpp(15,38): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [24]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\EntityManager.cpp(15,12): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\EntityManager.cpp(29,37): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [23]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\EntityManager.cpp(29,12): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\EntityManager.cpp(47,37): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [23]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\EntityManager.cpp(47,12): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+  SystemBase.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [22]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(60): message : see reference to class template instantiation 'ComponentArray<T>' being compiled
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [21]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [21]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::RegisterComponent(ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::AddComponent(EntityID,T,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::RemoveComponent(EntityID,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,12): message : This diagnostic occurred in the compiler generated function 'T &ComponentManager::GetComponent(EntityID,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,12): message : This diagnostic occurred in the compiler generated function 'std::shared_ptr<ComponentArray<T>> ComponentManager::GetComponentArray(ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [17]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,12): message : This diagnostic occurred in the compiler generated function 'std::shared_ptr<SystemBase> SystemManager::GetSystem(SystemType)'
+  SystemManager.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [17]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,12): message : This diagnostic occurred in the compiler generated function 'std::shared_ptr<SystemBase> SystemManager::GetSystem(SystemType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\System\GraphicSystem.h(4,10): fatal error C1083: Cannot open include file: 'd3dx9.h': No such file or directory
+  Engine.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\stdafx.h(3,10): fatal error C1083: Cannot open include file: 'd3dx9.h': No such file or directory
+  EventHandling.cpp
+  DirectInput.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.h(4,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\dinput.h(48): message : see previous definition of 'DIRECTINPUT_VERSION'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [22]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(18,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(60): message : see reference to class template instantiation 'ComponentArray<T>' being compiled
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [21]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(30,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [21]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentArray.h(42,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(16,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::RegisterComponent(ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(25,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::AddComponent(EntityID,T,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(35,12): message : This diagnostic occurred in the compiler generated function 'void ComponentManager::RemoveComponent(EntityID,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(45,12): message : This diagnostic occurred in the compiler generated function 'T &ComponentManager::GetComponent(EntityID,ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [35]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\ComponentManager.h(65,12): message : This diagnostic occurred in the compiler generated function 'std::shared_ptr<ComponentArray<T>> ComponentManager::GetComponentArray(ComponentType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,4): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [17]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,12): message : 'DebugOut': function declaration must be available as none of the arguments depend on a template parameter
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Core\SystemManager.h(20,12): message : This diagnostic occurred in the compiler generated function 'std::shared_ptr<SystemBase> SystemManager::GetSystem(SystemType)'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(28,47): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [30]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(28,14): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(34,70): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [50]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(34,13): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(44,68): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [49]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(44,12): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(65,35): error C2065: 'GWL_HINSTANCE': undeclared identifier
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(72,51): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [36]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(72,12): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(81,45): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [30]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(81,12): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(120,49): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [34]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(120,12): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(125,65): error C2664: 'void DebugOut(wchar_t *,...)': cannot convert argument 1 from 'const wchar_t [51]' to 'wchar_t *'
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\DirectInput.cpp(125,11): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\Debug.h(21,13): message : see declaration of 'DebugOut'
+  main.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\stdafx.h(3,10): fatal error C1083: Cannot open include file: 'd3dx9.h': No such file or directory
+  TextureDatabase.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\TextureDatabase.h(3,10): fatal error C1083: Cannot open include file: 'd3dx9.h': No such file or directory
+  GraphicSystem.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\System\GraphicSystem.h(4,10): fatal error C1083: Cannot open include file: 'd3dx9.h': No such file or directory
+  InputSystem.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Generating Code...

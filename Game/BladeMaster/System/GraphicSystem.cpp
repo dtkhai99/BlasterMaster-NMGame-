@@ -10,6 +10,7 @@ GraphicSystem::GraphicSystem()
 	Bitmask requirement;
 	requirement.set((int)ComponentType::Position, true);
 	requirement.set((int)ComponentType::Sprite, true);
+	requirement.set((int)ComponentType::SpritePos, true);
 	mRequiredComponents.push_back(requirement);
 }
 void GraphicSystem::LoadTexture()
@@ -59,8 +60,14 @@ void GraphicSystem::Render()
 	for (EntityID const& entity : mEntityList) {
 		Sprite& sprite = coordinator.GetComponent<Sprite>(entity, ComponentType::Sprite);
 		Position & position = coordinator.GetComponent<Position>(entity, ComponentType::Position);
+		SpritePos& spritepos = coordinator.GetComponent<SpritePos>(entity, ComponentType::SpritePos);
+		RECT r;
+		r.top = spritepos.top;
+		r.left = spritepos.left;
+		r.right = spritepos.right;
+		r.bottom = spritepos.bottom;
 		D3DXVECTOR3 p(position.x, position.y, 0);
-		spriteHandler->Draw(sprite.texture, NULL, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
+		spriteHandler->Draw(sprite.texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 	}
 
 }

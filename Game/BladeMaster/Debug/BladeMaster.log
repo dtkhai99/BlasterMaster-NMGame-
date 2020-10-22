@@ -1,2 +1,4 @@
-﻿  TextureDatabase.cpp
-  BladeMaster.vcxproj -> E:\Project\BlasterMaster-NMGame-\Game\Debug\BladeMaster.exe
+﻿  main.cpp
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\main.cpp(83,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\School\NMPTG\BlasterMaster-NMGame-\Game\BladeMaster\main.cpp(84,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  BladeMaster.vcxproj -> C:\School\NMPTG\BlasterMaster-NMGame-\Game\Debug\BladeMaster.exe
