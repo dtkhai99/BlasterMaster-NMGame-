@@ -4,7 +4,6 @@
 enum class ComponentType {
 	Sprite = 0,
 	Position,
-	SpritePos
 };
 
 class ComponentManager

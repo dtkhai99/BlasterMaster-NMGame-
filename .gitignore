@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+Game/.vs/Game/v16/Browse.VC.db
+Game/.vs/Game/v16/Browse.VC.db-shm
+Game/.vs/Game/v16/Browse.VC.db-wal
+Game/.vs/Game/v16/Browse.VC.opendb
+Game/.vs/Game/v16/ipch/AutoPCH/62d431cd5425e2ce/TEXTUREDATABASE.ipch
+*.db
+*.ipch
+Game/.vs/Game/v16/Browse.VC.db
+Game/.vs/Game/v16/ipch/AutoPCH/62d431cd5425e2ce/TEXTUREDATABASE.ipch
+Game/.vs/Game/v16/ipch/AutoPCH/62d431cd5425e2ce/TEXTUREDATABASE.ipch
