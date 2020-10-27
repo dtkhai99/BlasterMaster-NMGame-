@@ -8,7 +8,7 @@
 - Thêm tính năng Event          [ ]
 - File config                   [ ]
 - Đọc file                      [ ]
-- Texture                       [ ]
+- Texture                       [x]
 - Animation                     [ ]
 - Grid                          [ ]
 - Camera                        [ ]
