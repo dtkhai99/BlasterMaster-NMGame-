@@ -10,6 +10,7 @@
 	I want it render sprite and animation in two different function (It may has some duplicate code but that some thing to worry later)
 	For an entity to be qualified to use this system, it must have:
 		-> sprite component or animation component
+		-> position component
 
 	If an entity has animation, it must knows which animations are active,
 	and iterates over these on each update cycle. For each active animation, it does various checks to
@@ -18,11 +19,13 @@
 	Otherwise, it deactivates the animation and fires off an event so that any other systems that care about it find out.
 	If there are no system care about deactivation of animation, this system will set entity back to default sprite
 
-	Because an entity may have many sprites and animations, an entity is allowed to render one thing (either 1 sprite or 1 animation).
-	If it is an animation, that animation must be finished before the system change to other sprite or animation
+	More information about sprite, SpriteComponent.h
+	More information about animation, AnimationComponent.h
 */
 class GraphicSystem : public SystemBase {
 public:
 	GraphicSystem();
-	void Render();
+	void SpriteRender();
+	void AnimationRender();
+	void Update();
 };

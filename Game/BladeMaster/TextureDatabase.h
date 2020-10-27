@@ -6,13 +6,13 @@
 
 // This is just a table in database
 /*
-	|-----------------------------------|
-	|	Texture Id	|	Texture data	|
-	|---------------|-------------------|
-	|		1		| LPDIRECT3DTEXTURE9|
-	|		.		|		..			|
-	|		.		|		..			|
-	|---------------|-------------------|
+	|-----------------------------------|----------------------------|-------------
+	|	Texture Id	|	Texture data	|	columns		|	rows	 |	 size	|
+	|---------------|-------------------|---------------|------------|----------|
+	|		1		| LPDIRECT3DTEXTURE9|		5		|	  6		 |	 32		|
+	|		.		|		..			|		..		|	  .		 |			|
+	|		.		|		..			|		..		|	  .		 |			|
+	|---------------|-------------------|---------------|------------|----------|
 
 	Every texture file's path will be store in txt file and this class will load them to LPDIRECT3DTEXTURE9 type
 	of directx 9. No one outside this class will store Texture data, only store Texture id.
@@ -26,15 +26,25 @@ enum class TextureID {
 	Brick = 0,
 };
 
+struct TextureData {
+	LPDIRECT3DTEXTURE9 texture;
+	unsigned int columns;
+	unsigned int rows;
+	unsigned int size;
+};
 class TextureDatabase
 {
 public:
 	void ReadDataFromFile(LPCWSTR path);
-	void LoadTextureFromPath(TextureID id, LPCWSTR texturePath);
-	std::shared_ptr<LPDIRECT3DTEXTURE9> GetTexture(TextureID id);
+	void LoadTextureFromPath(TextureID id, 
+							unsigned int columns, 
+							unsigned int rows, 
+							unsigned int size, 
+							LPCWSTR texturePath);
+	std::shared_ptr<TextureData> GetTexture(TextureID id);
 	static TextureDatabase* GetInstance();
 private:
-	std::unordered_map<TextureID, std::shared_ptr<LPDIRECT3DTEXTURE9>> mDatabase;
+	std::unordered_map<TextureID, std::shared_ptr<TextureData>> mDatabase;
 	static TextureDatabase* __instance;
 };
 

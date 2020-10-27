@@ -28,6 +28,8 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include "TextureDatabase.h"
 #include <fstream>
 #include <iostream>
+
+#include<thread>
 using namespace std;
 
 Engine* engine;
@@ -69,7 +71,7 @@ void LoadResource()
 	Position pos[150];
 	Sprite sp[150];
 	textureDb = TextureDatabase::GetInstance();
-	textureDb->LoadTextureFromPath(TextureID::Brick , L"lvl2_side.png");
+	textureDb->LoadTextureFromPath(TextureID::Brick ,12,8,16,L"lvl2_side.png");
 
 	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
 
@@ -126,7 +128,7 @@ void Render() {
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 		
 		
-		graphicSystem->Render();
+		graphicSystem->SpriteRender();
 
 		spriteHandler->End();
 		d3ddv->EndScene();
@@ -227,6 +229,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	engine = Engine::GetInstance();
 	engine->InitDirectX(hWnd);
 	LoadResource();
+
 	Run();	
 
 	return 0;

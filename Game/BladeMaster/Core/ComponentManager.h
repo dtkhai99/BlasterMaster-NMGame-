@@ -3,6 +3,7 @@
 #include<memory>
 enum class ComponentType {
 	Sprite = 0,
+	Animation,
 	Position,
 };
 
