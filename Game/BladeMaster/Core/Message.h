@@ -1,8 +1,6 @@
 #pragma once
-enum Topic
-{
+class Event {
+protected:
+	virtual ~Event() {};
 
-};
-struct MessageBase {
-	Topic topic;
 };
