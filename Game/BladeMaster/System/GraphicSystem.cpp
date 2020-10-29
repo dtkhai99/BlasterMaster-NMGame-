@@ -5,7 +5,7 @@
 #include "../Component/PositionComponent.h"
 #include "../TextureDatabase.h"
 #include "../Component/AnimationComponent.h"
-
+#include <thread>
 
 extern Coordinator coordinator;
 
@@ -24,16 +24,16 @@ GraphicSystem::GraphicSystem()
 void GraphicSystem::SpriteRender()
 {
 	LPD3DXSPRITE spriteHandler = Engine::GetInstance()->GetSpriteHandler();
-	TextureDatabase * textureDb = TextureDatabase::GetInstance();
+	TextureDatabase* textureDb = TextureDatabase::GetInstance();
 	for (EntityID const& entity : mEntityList) {
 		Sprite& sprite = coordinator.GetComponent<Sprite>(entity, ComponentType::Sprite);
-		Position & position = coordinator.GetComponent<Position>(entity, ComponentType::Position);
+		Position& position = coordinator.GetComponent<Position>(entity, ComponentType::Position);
 		std::shared_ptr<TextureData> texture = textureDb->GetTexture((TextureID)sprite.textureID);
 		D3DXVECTOR3 p(position.x, position.y, 0);
 
 		spriteHandler->Draw(texture->texture, &sprite.area, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 	}
-
+	
 }
 
 void GraphicSystem::AnimationRender()

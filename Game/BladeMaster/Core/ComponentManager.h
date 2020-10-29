@@ -5,6 +5,8 @@ enum class ComponentType {
 	Sprite = 0,
 	Animation,
 	Position,
+	BoundingBox,
+	Speed
 };
 
 class ComponentManager
@@ -56,9 +58,6 @@ public:
 			componentArray->EntityDestroyed(entityID);
 		}
 	}
-
-private: /*Helper function*/
-
 	// Casting IComponentArray pointer to ComponentArray pointer
 	template<typename T>
 	std::shared_ptr<ComponentArray<T>> GetComponentArray(ComponentType componentType){
