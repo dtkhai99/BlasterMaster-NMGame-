@@ -2,9 +2,10 @@
 #include "../Core/Coordinator.h"
 #include "../Component/BoundingBoxComponent.h"
 #include "../Component/SpeedComponent.h"
-
+#include "../EventHandler/PhysicEvent.h"
+#include "../EventHandler/EventHandling.h"
 extern Coordinator coordinator;
-
+extern EventHandling eventHandling;
 
 PhysicSystem::PhysicSystem()
 {
@@ -23,8 +24,16 @@ void PhysicSystem::Update(DWORD dt)
 		coEvents.clear();
 		CalcPotentialCollisions(entity, coEvents, dt);
 		if (coEvents.size() != 0) {
-
+			float min_tx, min_ty, nx = 0, ny;
+			float rdx = 0;
+			float rdy = 0;
+			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+			CollisionEvent* collisionEvent = new CollisionEvent(min_tx, min_ty, nx, ny, coEventsResult, entity);
+			eventHandling.handleEvent(collisionEvent);
 		}
+
+		// clean up collision events
+		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
 }
 

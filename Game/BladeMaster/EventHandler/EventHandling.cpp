@@ -1,4 +1,5 @@
 #include "EventHandling.h"
+#include "EventBase.h"
 /*
   After receiving a generic event of type Event it determines its actual type and then calls the
   proper handler method with valid event as a parameter.

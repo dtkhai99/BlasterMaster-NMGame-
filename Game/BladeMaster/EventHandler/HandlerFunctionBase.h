@@ -4,14 +4,14 @@
   event types and are also responsible for proper down-casting to actual event types when calling the handling method
 */
 class HandlerFunctionBase {
-protected:
+public:
   virtual ~HandlerFunctionBase() {};
   void exec(const Event * e) {call(e);}
 private:
   virtual void call(const Event *) = 0;
 };
 // MemberFunctionHandler's purpose is to safely cast to proper event type.
-template<typename class T, typename class EvenT>
+template<typename T, typename EvenT>
 class MemberFunctionHandler : public HandlerFunctionBase{
 public:
   typedef void (T::*memFunction)(Event *); //Forwar declaration

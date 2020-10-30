@@ -1,7 +1,8 @@
 #pragma once
-#include "Core/Message.h"
 #include "HandlerFunctionBase.h"
 #include<typeinfo>
+#include<typeindex>
+#include<map>
 /*
      the main message handling function determines the actual message type using dynamic_cast<>
      The idea is to derive concrete event types from the base class Event and register member functions to handle that
@@ -22,8 +23,8 @@ public:
 
   // T -> HandlerFunctionBase derived class
   // EventT -> kinda like message. this class derive from Event base class
-  template<typename class T, typename class EvenT>
-  registerEventFunction(T* obj, void (T::*memFunction)(EventT *) ) {
+  template<typename T, typename EventT>
+  void registerEventFunction(T* obj, void (T::*memFunction)(EventT *) ) {
       mHandlers.emplace(std::type_index(typeid(EventT)), nullptr);
       mHandlers[typeid(EventT)] = new MemberFunctionHandler<T, EventT>(obj, memFunction);
   }

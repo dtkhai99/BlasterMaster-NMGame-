@@ -26,15 +26,16 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include"Component/SpriteComponent.h"
 #include "System/GraphicSystem.h"
 #include "TextureDatabase.h"
+#include "EventHandler/EventHandling.h"
 #include <fstream>
 #include <iostream>
 
-#include<thread>
 using namespace std;
 
 Engine* engine;
 TextureDatabase* textureDb;
 Coordinator coordinator;
+EventHandling eventHandling;
 EntityID tileset[150];
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -53,19 +54,6 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void LoadResource() 
 {
-	/*EntityID brick = coordinator.CreateEntity();
-	Sprite sprite;
-	sprite.texturePath = L"brick.png";
-	coordinator.AddComponent(brick, sprite, ComponentType::Sprite);
-
-	Position pos;
-	pos.x = 30.0f;
-	pos.y = 10.0f;
-	coordinator.AddComponent(brick, pos, ComponentType::Position);
-	
-	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
-	graphicSystem->AddEntity(brick);
-	graphicSystem->LoadTexture();*/
 
 	int count = 0;
 	Position pos[150];
