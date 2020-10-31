@@ -1,4 +1,5 @@
 #pragma once
+#include "EventBase.h"
 /*
   Concrete derivatives store member function pointers for different specific
   event types and are also responsible for proper down-casting to actual event types when calling the handling method
