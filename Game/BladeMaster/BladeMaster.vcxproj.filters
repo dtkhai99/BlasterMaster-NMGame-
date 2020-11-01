@@ -28,6 +28,18 @@
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{8a09d2ac-00b8-4449-8e71-7a8aa9a660a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ECS_Entity_Ex">
+      <UniqueIdentifier>{6a9dfd3f-05fb-408e-b3b1-948ea4e60dbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS_Entity_Ex">
+      <UniqueIdentifier>{9b0c8f16-3d6c-4e13-bcbf-36300b0801b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EventHandler">
+      <UniqueIdentifier>{da993a7c-7380-4c5f-91e6-afe8345792de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EventHandler">
+      <UniqueIdentifier>{1a5871eb-c443-4f88-a4bd-820ad1a87eb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,6 +75,24 @@
     <ClCompile Include="TextureDatabase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="System\PhysicSystem.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler\EventHandling.cpp">
+      <Filter>Source Files\EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler\PhysicEvent.cpp">
+      <Filter>Source Files\EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS_Entity_Ex\Player.cpp">
+      <Filter>Source Files\ECS_Entity_Ex</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS_Entity_Ex\PlayerInputComponent.cpp">
+      <Filter>Source Files\ECS_Entity_Ex</Filter>
+    </ClCompile>
+    <ClCompile Include="System\MovementSystem.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -95,9 +125,6 @@
     <ClInclude Include="Core\Type.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Component\component.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
     <ClInclude Include="EventHandling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -115,6 +142,48 @@
     </ClInclude>
     <ClInclude Include="TextureDatabase.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\PhysicSystem.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler\EventBase.h">
+      <Filter>Header Files\EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler\EventHandling.h">
+      <Filter>Header Files\EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler\HandlerFunctionBase.h">
+      <Filter>Header Files\EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler\PhysicEvent.h">
+      <Filter>Header Files\EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS_Entity_Ex\Player.h">
+      <Filter>Header Files\ECS_Entity_Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS_Entity_Ex\PlayerInputComponent.h">
+      <Filter>Header Files\ECS_Entity_Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\AnimationComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\BoundingBoxComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\EntityTypeComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\PositionComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\SpeedComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\SpriteComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="System\MovementSystem.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

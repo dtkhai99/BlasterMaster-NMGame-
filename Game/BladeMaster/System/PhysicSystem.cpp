@@ -2,8 +2,7 @@
 #include "../Core/Coordinator.h"
 #include "../Component/BoundingBoxComponent.h"
 #include "../Component/SpeedComponent.h"
-#include "../EventHandler/PhysicEvent.h"
-#include "../EventHandler/EventHandling.h"
+#include "../EventHandler/PhysicEvent.h"#include "../EventHandler/EventHandling.h"
 extern Coordinator coordinator;
 extern EventHandling eventHandling;
 
