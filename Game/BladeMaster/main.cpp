@@ -120,12 +120,12 @@ void LoadResource()
 				posTile[tempcount].x = colNumber * 16;
 				posTile[tempcount].y = rowNumber * 16;
 				coordinator.AddComponent(tilemap[tempcount], posTile[tempcount], ComponentType::Position);
-
+				graphicSystem->AddEntity(tilemap[tempcount]);
 				colNumber++;
 
 				tempcount++;
 
-				graphicSystem->AddEntity(tilemap[tempcount]);
+				
 
 				break;
 			}

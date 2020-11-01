@@ -1,4 +1,8 @@
 #pragma once
+#include <vector>
+#include <map>
+#include <d3d9.h>
+#include <functional>
 /*
 	Approach 1:
 	Our main goal is to create a scene manager with no limit to the number of elements and distinct elements it 
@@ -14,7 +18,22 @@
 	Approach 2:
 	Use Facade or Mediator design pattern
 */
+using SceneID = short;
+class SceneBase;
 class SceneManager
 {
+public:
+	SceneManager();
+	void AddScene(SceneID id);
+	void SwapScene(SceneID swapedID, SceneID swappingID);
+	void RemoveScene(SceneID id);
+	void RemoveAllScene();
+	void Update(DWORD dt);
+	void Render();
+	static SceneManager * getInstance();
+private:
+	std::vector<SceneBase*> mCurrentScenes;
+	std::map<short, std::function<void()>> mScenesDatabase;
+	static SceneManager * __instance;
 };
 

@@ -60,9 +60,6 @@
     <ClCompile Include="Core\SystemManager.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="EventHandling.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DirectInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -92,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="System\MovementSystem.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="Core\Type.h">
       <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandling.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Message.h">
       <Filter>Header Files</Filter>
@@ -184,6 +184,12 @@
     </ClInclude>
     <ClInclude Include="System\MovementSystem.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
