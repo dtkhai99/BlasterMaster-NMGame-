@@ -160,8 +160,9 @@
     <ClCompile Include="EventHandler\PhysicEvent.cpp" />
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SceneBase.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Scene\Map_1_Background.cpp" />
+    <ClCompile Include="Scene\SceneBase.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="System\MovementSystem.cpp" />
     <ClCompile Include="System\PhysicSystem.cpp" />
     <ClCompile Include="TextureDatabase.cpp" />
@@ -193,8 +194,9 @@
     <ClInclude Include="EventHandler\PhysicEvent.h" />
     <ClInclude Include="DirectInput.h" />
     <ClInclude Include="InputSystem.h" />
-    <ClInclude Include="SceneBase.h" />
-    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Scene\Map_1_Background.h" />
+    <ClInclude Include="Scene\SceneBase.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="System\MovementSystem.h" />
     <ClInclude Include="System\PhysicSystem.h" />
     <ClInclude Include="TextureDatabase.h" />

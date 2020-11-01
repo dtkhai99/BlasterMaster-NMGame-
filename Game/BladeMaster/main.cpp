@@ -27,18 +27,13 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include "System/GraphicSystem.h"
 #include "TextureDatabase.h"
 #include "EventHandler/EventHandling.h"
-#include <fstream>
-#include <iostream>
-
-using namespace std;
+#include "Scene/SceneManager.h"
 
 Engine* engine;
 TextureDatabase* textureDb;
 Coordinator coordinator;
 EventHandling eventHandling;
-EntityID tileset[150];
-EntityID tilemap[17000];
-
+SceneManager* sceneManager;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -56,89 +51,8 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void LoadResource() 
 {
-
-	int count = 0;
-	Sprite sp[150];
-	Position pos[150];
-	textureDb = TextureDatabase::GetInstance();
-	textureDb->LoadTextureFromPath(TextureID::Brick ,12,12,16,L"lvl2_side.png");
-
-	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
-
-	for (int i = 0; i < 12; i++)
-	{
-		for (int j = 0; j < 12; j++)
-		{
-			tileset[count] = coordinator.CreateEntity();
-
-			/*pos[count].x = j * 16;
-			pos[count].y = i * 16;
-			coordinator.AddComponent(tileset[count], pos[count], ComponentType::Position);*/
-
-			sp[count].textureID = (unsigned int)TextureID::Brick;
-			sp[count].area.left = j * 16;
-			sp[count].area.top = i * 16;
-			sp[count].area.right = j * 16 + 16;
-			sp[count].area.bottom = i*16 + 16;
-			coordinator.AddComponent(tileset[count], sp[count], ComponentType::Sprite);
-
-			graphicSystem->AddEntity(tileset[count]);
-
-			count++;
-		}
-	}
-
-
-	int number;
-	int tempcount = 0;
-	Position posTile[17000];
-	Sprite spriteTile[17000];
-	int rowNumber = 0;
-	int colNumber = 0;
-
-	ifstream inFile;
-
-	//inFile.open("lvl2_side_tilemap.txt");
-	inFile.open("test.txt");
-	if (!inFile)
-	{
-		cout << "Unable to open file";
-		exit(1);
-	}
-
-	while (inFile >> number)
-	{
-		for (int i = 0; i < 144; i++)
-		{
-			if (number == tileset[i])
-			{
-				tilemap[tempcount] = coordinator.CreateEntity();
-
-				spriteTile[tempcount] = coordinator.GetComponent<Sprite>(tileset[i], ComponentType::Sprite);
-				coordinator.AddComponent(tilemap[tempcount], spriteTile[tempcount], ComponentType::Sprite);
-
-				posTile[tempcount].x = colNumber * 16;
-				posTile[tempcount].y = rowNumber * 16;
-				coordinator.AddComponent(tilemap[tempcount], posTile[tempcount], ComponentType::Position);
-				graphicSystem->AddEntity(tilemap[tempcount]);
-				colNumber++;
-
-				tempcount++;
-
-				
-
-				break;
-			}
-		}
-		if (colNumber == 129)
-		{
-			colNumber = 0;
-			rowNumber++;
-		}
-	}
-
-	inFile.close();
-
+	sceneManager = SceneManager::getInstance();
+	sceneManager->AddScene(0);
 }
 /*
 	Update world status for this frame
@@ -147,7 +61,7 @@ void LoadResource()
 	IMPORTANT: no render-related code should be used inside this function.
 */
 void Update(DWORD dt) {
-
+	sceneManager->Update(dt);
 }
 
 /*
@@ -169,7 +83,7 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		graphicSystem->SpriteRender();
+		sceneManager->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();

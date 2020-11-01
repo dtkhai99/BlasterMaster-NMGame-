@@ -6,7 +6,6 @@
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define WINDOW_TITLE L"00 - Intro"
-#define WINDOW_ICON_PATH L"brick.ico" 
 
 #define D3DCOLOR_WHITE D3DCOLOR_XRGB(255, 255, 255)
 
