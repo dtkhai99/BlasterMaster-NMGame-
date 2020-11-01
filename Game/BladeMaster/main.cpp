@@ -71,10 +71,6 @@ void LoadResource()
 		{
 			tileset[count] = coordinator.CreateEntity();
 
-			/*pos[count].x = j * 16;
-			pos[count].y = i * 16;
-			coordinator.AddComponent(tileset[count], pos[count], ComponentType::Position);*/
-
 			sp[count].textureID = (unsigned int)TextureID::Brick;
 			sp[count].area.left = j * 16;
 			sp[count].area.top = i * 16;
@@ -82,7 +78,7 @@ void LoadResource()
 			sp[count].area.bottom = i*16 + 16;
 			coordinator.AddComponent(tileset[count], sp[count], ComponentType::Sprite);
 
-			graphicSystem->AddEntity(tileset[count]);
+			//graphicSystem->AddEntity(tileset[count]);
 
 			count++;
 		}
@@ -98,8 +94,7 @@ void LoadResource()
 
 	ifstream inFile;
 
-	//inFile.open("lvl2_side_tilemap.txt");
-	inFile.open("test.txt");
+	inFile.open("lvl2_side_tilemap.txt");
 	if (!inFile)
 	{
 		cout << "Unable to open file";
@@ -124,8 +119,6 @@ void LoadResource()
 				colNumber++;
 
 				tempcount++;
-
-				
 
 				break;
 			}
