@@ -29,8 +29,6 @@ private:
 	int backBufferHeight = 0;
 	LPD3DXSPRITE spriteHandler = NULL;			// Sprite helper library to help us draw 2D images 
 
-	LPDIRECT3DTEXTURE9 texBrick;				// Texture object to store brick image
-
 
 };
 

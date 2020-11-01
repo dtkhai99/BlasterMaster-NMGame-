@@ -27,18 +27,13 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include "System/GraphicSystem.h"
 #include "TextureDatabase.h"
 #include "EventHandler/EventHandling.h"
-#include <fstream>
-#include <iostream>
-
-using namespace std;
+#include "Scene/SceneManager.h"
 
 Engine* engine;
 TextureDatabase* textureDb;
 Coordinator coordinator;
 EventHandling eventHandling;
-EntityID tileset[150];
-EntityID tilemap[17000];
-
+SceneManager* sceneManager;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -56,6 +51,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void LoadResource() 
 {
+
 
 	int count = 0;
 	Sprite sp[150];
@@ -132,6 +128,9 @@ void LoadResource()
 
 	inFile.close();
 
+	sceneManager = SceneManager::getInstance();
+	sceneManager->AddScene(0);
+
 }
 /*
 	Update world status for this frame
@@ -140,7 +139,7 @@ void LoadResource()
 	IMPORTANT: no render-related code should be used inside this function.
 */
 void Update(DWORD dt) {
-
+	sceneManager->Update(dt);
 }
 
 /*
@@ -162,7 +161,7 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		graphicSystem->SpriteRender();
+		sceneManager->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();

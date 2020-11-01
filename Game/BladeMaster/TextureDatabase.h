@@ -22,9 +22,8 @@
 	There will be only 1 texture database in the game
 */
 // Map texture id to something meaningful
-enum class TextureID {
-	Brick = 0,
-};
+using TextureID = short;
+#define BRICK 0
 
 struct TextureData {
 	LPDIRECT3DTEXTURE9 texture;
