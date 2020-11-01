@@ -162,7 +162,9 @@
     <ClCompile Include="System\InputSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Component\component.h" />
+    <ClInclude Include="Component\AnimationComponent.h" />
+    <ClInclude Include="Component\PositionComponent.h" />
+    <ClInclude Include="Component\SpriteComponent.h" />
     <ClInclude Include="Core\ComponentArray.h" />
     <ClInclude Include="Core\ComponentManager.h" />
     <ClInclude Include="Core\Coordinator.h" />

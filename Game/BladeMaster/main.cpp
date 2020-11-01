@@ -36,6 +36,8 @@ Engine* engine;
 TextureDatabase* textureDb;
 Coordinator coordinator;
 EntityID tileset[150];
+EntityID tilemap[17000];
+
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -53,38 +55,23 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void LoadResource() 
 {
-	/*EntityID brick = coordinator.CreateEntity();
-	Sprite sprite;
-	sprite.texturePath = L"brick.png";
-	coordinator.AddComponent(brick, sprite, ComponentType::Sprite);
-
-	Position pos;
-	pos.x = 30.0f;
-	pos.y = 10.0f;
-	coordinator.AddComponent(brick, pos, ComponentType::Position);
-	
-	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
-	graphicSystem->AddEntity(brick);
-	graphicSystem->LoadTexture();*/
-
 	int count = 0;
-	Position pos[150];
 	Sprite sp[150];
+	Position pos[150];
 	textureDb = TextureDatabase::GetInstance();
-	textureDb->LoadTextureFromPath(TextureID::Brick ,12,8,16,L"lvl2_side.png");
+	textureDb->LoadTextureFromPath(TextureID::Brick ,12,12,16,L"lvl2_side.png");
 
 	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
 
-	//why dafug len entity 131 lai ko cho doc
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 12; i++)
 	{
 		for (int j = 0; j < 12; j++)
 		{
 			tileset[count] = coordinator.CreateEntity();
 
-			pos[count].x = j * 16;
-			pos[count].y = i *16;
-			coordinator.AddComponent(tileset[count], pos[count], ComponentType::Position);
+			/*pos[count].x = j * 16;
+			pos[count].y = i * 16;
+			coordinator.AddComponent(tileset[count], pos[count], ComponentType::Position);*/
 
 			sp[count].textureID = (unsigned int)TextureID::Brick;
 			sp[count].area.left = j * 16;
@@ -98,6 +85,57 @@ void LoadResource()
 			count++;
 		}
 	}
+
+
+	int number;
+	int tempcount = 0;
+	Position posTile[17000];
+	Sprite spriteTile[17000];
+	int rowNumber = 0;
+	int colNumber = 0;
+
+	ifstream inFile;
+
+	//inFile.open("lvl2_side_tilemap.txt");
+	inFile.open("test.txt");
+	if (!inFile)
+	{
+		cout << "Unable to open file";
+		exit(1);
+	}
+
+	while (inFile >> number)
+	{
+		for (int i = 0; i < 144; i++)
+		{
+			if (number == tileset[i])
+			{
+				tilemap[tempcount] = coordinator.CreateEntity();
+
+				spriteTile[tempcount] = coordinator.GetComponent<Sprite>(tileset[i], ComponentType::Sprite);
+				coordinator.AddComponent(tilemap[tempcount], spriteTile[tempcount], ComponentType::Sprite);
+
+				posTile[tempcount].x = colNumber * 16;
+				posTile[tempcount].y = rowNumber * 16;
+				coordinator.AddComponent(tilemap[tempcount], posTile[tempcount], ComponentType::Position);
+
+				colNumber++;
+
+				tempcount++;
+
+				graphicSystem->AddEntity(tilemap[tempcount]);
+
+				break;
+			}
+		}
+		if (colNumber == 129)
+		{
+			colNumber = 0;
+			rowNumber++;
+		}
+	}
+
+	inFile.close();
 
 }
 /*
@@ -115,19 +153,20 @@ void Update(DWORD dt) {
 	IMPORTANT: world status must NOT be changed during rendering
 */
 
-void Render() {
+void Render() 
+{
 	LPDIRECT3DDEVICE9 d3ddv = engine->GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 bb = engine->GetBackBuffer();
 	LPD3DXSPRITE spriteHandler = engine->GetSpriteHandler();
 	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
+
 	if (d3ddv->BeginScene())
 	{
 		// Clear back buffer with a color
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-		
-		
+
 		graphicSystem->SpriteRender();
 
 		spriteHandler->End();
@@ -137,6 +176,7 @@ void Render() {
 	// Display back buffer content to the screen
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
+
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
 	WNDCLASSEX wc;

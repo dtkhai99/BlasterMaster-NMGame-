@@ -32,7 +32,7 @@ public:
 	}
 	template<typename T>
 	void RemoveComponent(EntityID entityID, ComponentType componentType) {
-		mComponentManager->RemoveComponent(entityID, componentType);
+		mComponentManager->RemoveComponent<T>(entityID, componentType);
 
 		Bitmask bit = mEntityManager->GetBitmask(entityID);
 		bit.set((int)componentType, false);
