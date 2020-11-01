@@ -26,15 +26,16 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include"Component/SpriteComponent.h"
 #include "System/GraphicSystem.h"
 #include "TextureDatabase.h"
+#include "EventHandler/EventHandling.h"
 #include <fstream>
 #include <iostream>
 
-#include<thread>
 using namespace std;
 
 Engine* engine;
 TextureDatabase* textureDb;
 Coordinator coordinator;
+EventHandling eventHandling;
 EntityID tileset[150];
 EntityID tilemap[17000];
 
@@ -55,6 +56,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void LoadResource() 
 {
+
 	int count = 0;
 	Sprite sp[150];
 	Position pos[150];
