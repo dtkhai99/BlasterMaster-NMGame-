@@ -1,11 +1,9 @@
 #include "DirectInput.h"
 #include "Debug.h"
-#include "Core/Coordinator.h"
-#include "System/InputSystem.h"
-
+#include "../System/InputSystem.h"
+#include "MappedInput.h"
 DirectInput* DirectInput::__instance = NULL;
 
-extern Coordinator coordinator;
 int DirectInput::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
@@ -14,9 +12,9 @@ int DirectInput::IsKeyDown(int KeyCode)
 void DirectInput::ProcessKeyboard()
 {
 	HRESULT hr;
-
+	MappedInput mappedInput;
 	// Collect all key states first
-	hr = didv->GetDeviceState(sizeof(keyStates), keyStates);
+	hr = didv->GetDeviceState(sizeof(mappedInput.keyStates), mappedInput.keyStates);
 	if (FAILED(hr))
 	{
 		// If the keyboard lost focus or was not acquired then try to get control back.
@@ -44,17 +42,19 @@ void DirectInput::ProcessKeyboard()
 		DebugOut(L"[ERROR] DINPUT::GetDeviceData failed. Error: %d\n", hr);
 		return;
 	}
-	
-	std::shared_ptr<InputSystem> inputSys = coordinator.GetSystem<InputSystem>(SystemType::Input);
+
 	for (DWORD i = 0; i < dwElements; i++)
 	{
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
-		if ((KeyState & 0x80) > 0)
+		mappedInput.bufferedKeyEvent[KeyCode] = (KeyState & 0x80) > 0 ? true : false;
+		/*if ((KeyState & 0x80) > 0)
 			inputSys->OnKeyDown(KeyCode);
 		else
-			inputSys->OnKeyUp(KeyCode);
+			inputSys->OnKeyUp(KeyCode);*/
 	}
+
+	inputContext->Dispatch(mappedInput);
 }
 
 void DirectInput::InitKeyboard(HWND hWnd)
@@ -82,7 +82,7 @@ void DirectInput::InitKeyboard(HWND hWnd)
 		return;
 	}
 
-	// Set the data format to "keyboard format" - a predefined data format 
+	// Set the data format to "keyboard format" - a predefined data format
 	//
 	// A data format specifies which controls on a device we
 	// are interested in, and how they should be reported.
