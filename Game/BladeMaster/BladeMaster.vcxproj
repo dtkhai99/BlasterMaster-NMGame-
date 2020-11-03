@@ -163,6 +163,7 @@
     <ClCompile Include="Scene\Map_1_Background.cpp" />
     <ClCompile Include="Scene\SceneBase.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="SpriteDatabase.cpp" />
     <ClCompile Include="System\MovementSystem.cpp" />
     <ClCompile Include="System\PhysicSystem.cpp" />
     <ClCompile Include="TextureDatabase.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Scene\Map_1_Background.h" />
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="SpriteDatabase.h" />
     <ClInclude Include="System\MovementSystem.h" />
     <ClInclude Include="System\PhysicSystem.h" />
     <ClInclude Include="TextureDatabase.h" />
