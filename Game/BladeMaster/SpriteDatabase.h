@@ -15,7 +15,7 @@
 
 	these left, top, right, bottom can be group as RECT struct of directX
 	index can be used as index of vector
-	
+
 	Question: Should it be use for animation?
 */
 struct SpriteData {
@@ -33,4 +33,3 @@ private:
 	std::map<TextureID, std::vector<SpriteData>> mSpriteData;
 	static SpriteDatabase* __instance;
 };
-

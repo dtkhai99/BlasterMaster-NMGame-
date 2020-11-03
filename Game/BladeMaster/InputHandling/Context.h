@@ -9,13 +9,11 @@
 
   Each context will be able to map input to Command.
   I will use Command Pattern here
-  
+
   More information:
   https://gameprogrammingpatterns.com/command.html
 */
 class Context {
 public:
   virtual bool Handle(MappedInput &) = 0;
-public:
-  bool isActive;
 };
