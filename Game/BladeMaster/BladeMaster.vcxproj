@@ -158,7 +158,8 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EventHandler\EventHandling.cpp" />
     <ClCompile Include="EventHandler\PhysicEvent.cpp" />
-    <ClCompile Include="DirectInput.cpp" />
+    <ClCompile Include="InputHandling\DirectInput.cpp" />
+    <ClCompile Include="InputHandling\InputContext.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\Map_1_Background.cpp" />
     <ClCompile Include="Scene\SceneBase.cpp" />
@@ -192,7 +193,10 @@
     <ClInclude Include="EventHandler\EventHandling.h" />
     <ClInclude Include="EventHandler\HandlerFunctionBase.h" />
     <ClInclude Include="EventHandler\PhysicEvent.h" />
-    <ClInclude Include="DirectInput.h" />
+    <ClInclude Include="InputHandling\Context.h" />
+    <ClInclude Include="InputHandling\DirectInput.h" />
+    <ClInclude Include="InputHandling\InputContext.h" />
+    <ClInclude Include="InputHandling\MappedInput.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Scene\Map_1_Background.h" />
     <ClInclude Include="Scene\SceneBase.h" />

@@ -17,7 +17,7 @@
 class DirectInput
 {
 public:
-	int IsKeyDown(int KeyCode);
+	//int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 	void InitKeyboard(HWND hWnd);
 	static DirectInput* GetInstance();

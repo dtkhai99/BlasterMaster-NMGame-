@@ -1,13 +1,13 @@
 #include "DirectInput.h"
-#include "Debug.h"
+#include "../Debug.h"
 #include "../System/InputSystem.h"
 #include "MappedInput.h"
 DirectInput* DirectInput::__instance = NULL;
 
-int DirectInput::IsKeyDown(int KeyCode)
+/*int DirectInput::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
-}
+}*/
 
 void DirectInput::ProcessKeyboard()
 {

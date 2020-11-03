@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <list>
 //This is second layer in Input Handling System
 /*
   The second layer examines what game contexts are active, and maps the raw inputs into high-level actions, states, and ranges.
