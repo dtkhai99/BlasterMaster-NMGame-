@@ -28,9 +28,17 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include "TextureDatabase.h"
 #include "EventHandler/EventHandling.h"
 #include "Scene/SceneManager.h"
+#include "SpriteDatabase.h"
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+
 
 Engine* engine;
 TextureDatabase* textureDb;
+SpriteDatabase* spriteDb;
 Coordinator coordinator;
 EventHandling eventHandling;
 SceneManager* sceneManager;
@@ -109,7 +117,8 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	wc.lpfnWndProc = (WNDPROC)WinProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
-	wc.hIcon = (HICON)LoadImage(hInstance, WINDOW_ICON_PATH, IMAGE_ICON, 0, 0, LR_LOADFROMFILE);;
+	//wc.hIcon = (HICON)LoadImage(hInstance, WINDOW_ICON_PATH, IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+	wc.hIcon = NULL;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = NULL;

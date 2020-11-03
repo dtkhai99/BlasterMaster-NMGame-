@@ -46,10 +46,10 @@ void GraphicSystem::AnimationRender()
 		std::shared_ptr<TextureData> texture = textureDb->GetTexture((TextureID)animation.textureID);
 		D3DXVECTOR3 p(position.x, position.y, 0);
 		RECT r;
-		r.left = animation.currentFrame % texture->columns;
-		r.top = animation.currentFrame % texture->rows;
-		r.right = animation.currentFrame % texture->columns + texture->size;
-		r.bottom = animation.currentFrame % texture->rows + texture->size;
+		r.left = animation.currentFrame % texture->columns * texture->size_width;
+		r.top = animation.currentFrame % texture->rows * texture->size_height;
+		r.right = animation.currentFrame % texture->columns * texture->size_width + texture->size_width;
+		r.bottom = animation.currentFrame % texture->rows * texture->size_height + texture->size_height;
 		spriteHandler->Draw(texture->texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 	}
 }
@@ -63,10 +63,15 @@ void GraphicSystem::Update()
 		if (now - animation.animationCounter > animation.delayValue && animation.isFinished == false) {
 			animation.currentFrame++;
 			animation.animationCounter = now;
-			if (animation.currentFrame == animation.stateDictionary[animation.currentState].endFrame) {
-				animation.stateDictionary[animation.currentState].isLoopable ?
-					animation.currentFrame = animation.stateDictionary[animation.currentState].startFrame :
+			if (animation.currentFrame == animation.stateDictionary[animation.currentState].endFrame + 1) {
+				if (animation.stateDictionary[animation.currentState].isLoopable) {
+					animation.currentFrame = animation.stateDictionary[animation.currentState].startFrame;
+				}
+				else {
 					animation.isFinished = true;
+					animation.currentState = StateID::Idle;
+				}
+
 			}
 		}
 

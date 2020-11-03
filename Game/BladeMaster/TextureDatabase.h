@@ -24,12 +24,14 @@
 // Map texture id to something meaningful
 using TextureID = short;
 #define BRICK 0
+#define GUNNER 1
 
 struct TextureData {
 	LPDIRECT3DTEXTURE9 texture;
 	unsigned int columns;
 	unsigned int rows;
-	unsigned int size;
+	unsigned int size_height;
+	unsigned int size_width;
 };
 class TextureDatabase
 {
@@ -37,8 +39,7 @@ public:
 	void ReadDataFromFile(LPCWSTR path);
 	void LoadTextureFromPath(TextureID id, 
 							unsigned int columns, 
-							unsigned int rows, 
-							unsigned int size, 
+							unsigned int rows,  
 							LPCWSTR texturePath);
 	std::shared_ptr<TextureData> GetTexture(TextureID id);
 	static TextureDatabase* GetInstance();

@@ -22,6 +22,8 @@
 */
 enum class StateID {
 	Idle = 0,
+	Go_Left,
+	Go_Right
 };
 struct State {
 	unsigned int startFrame;
