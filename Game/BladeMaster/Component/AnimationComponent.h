@@ -3,7 +3,7 @@
 #include<d3d9.h>
 /*
 	Any entity have more than 2 sprite needs to render will become animation.
-	If that happened, we will distinguish sprites or sequence of sprites by states. 
+	If that happened, we will distinguish sprites or sequence of sprites by states.
 	At one specific moment, 1 entity is only at 1 state
 
 	All sprites of an animation must be drawn in same texture file
