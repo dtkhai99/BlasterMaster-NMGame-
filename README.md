@@ -4,7 +4,7 @@
 - ECS framework                 [x]
 - Input : Keyboard              [ ]
 - Sắp xếp lại file              [x]
-- Thêm SceneManager + Scene     [ ]
+- Thêm SceneManager + Scene     [x]
 - Thêm tính năng Event          [x]
 - File config                   [ ]
 - Đọc file                      [ ]

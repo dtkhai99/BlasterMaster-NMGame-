@@ -59,6 +59,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void LoadResource() 
 {
+
 	sceneManager = SceneManager::getInstance();
 	sceneManager->AddScene(0);
 
