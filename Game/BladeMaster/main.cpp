@@ -28,9 +28,17 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include "TextureDatabase.h"
 #include "EventHandler/EventHandling.h"
 #include "Scene/SceneManager.h"
+#include "SpriteDatabase.h"
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+
 
 Engine* engine;
 TextureDatabase* textureDb;
+SpriteDatabase* spriteDb;
 Coordinator coordinator;
 EventHandling eventHandling;
 SceneManager* sceneManager;
@@ -51,83 +59,6 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void LoadResource() 
 {
-
-
-	int count = 0;
-	Sprite sp[150];
-	Position pos[150];
-	textureDb = TextureDatabase::GetInstance();
-	textureDb->LoadTextureFromPath(TextureID::Brick ,12,12,16,L"lvl2_side.png");
-
-	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
-
-	for (int i = 0; i < 12; i++)
-	{
-		for (int j = 0; j < 12; j++)
-		{
-			tileset[count] = coordinator.CreateEntity();
-
-			sp[count].textureID = (unsigned int)TextureID::Brick;
-			sp[count].area.left = j * 16;
-			sp[count].area.top = i * 16;
-			sp[count].area.right = j * 16 + 16;
-			sp[count].area.bottom = i*16 + 16;
-			coordinator.AddComponent(tileset[count], sp[count], ComponentType::Sprite);
-
-			//graphicSystem->AddEntity(tileset[count]);
-
-			count++;
-		}
-	}
-
-
-	int number;
-	int tempcount = 0;
-	Position posTile[17000];
-	Sprite spriteTile[17000];
-	int rowNumber = 0;
-	int colNumber = 0;
-
-	ifstream inFile;
-
-	inFile.open("lvl2_side_tilemap.txt");
-	if (!inFile)
-	{
-		cout << "Unable to open file";
-		exit(1);
-	}
-
-	while (inFile >> number)
-	{
-		for (int i = 0; i < 144; i++)
-		{
-			if (number == tileset[i])
-			{
-				tilemap[tempcount] = coordinator.CreateEntity();
-
-				spriteTile[tempcount] = coordinator.GetComponent<Sprite>(tileset[i], ComponentType::Sprite);
-				coordinator.AddComponent(tilemap[tempcount], spriteTile[tempcount], ComponentType::Sprite);
-
-				posTile[tempcount].x = colNumber * 16;
-				posTile[tempcount].y = rowNumber * 16;
-				coordinator.AddComponent(tilemap[tempcount], posTile[tempcount], ComponentType::Position);
-				graphicSystem->AddEntity(tilemap[tempcount]);
-				colNumber++;
-
-				tempcount++;
-
-				break;
-			}
-		}
-		if (colNumber == 129)
-		{
-			colNumber = 0;
-			rowNumber++;
-		}
-	}
-
-	inFile.close();
-
 	sceneManager = SceneManager::getInstance();
 	sceneManager->AddScene(0);
 
@@ -185,7 +116,8 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	wc.lpfnWndProc = (WNDPROC)WinProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
-	wc.hIcon = (HICON)LoadImage(hInstance, WINDOW_ICON_PATH, IMAGE_ICON, 0, 0, LR_LOADFROMFILE);;
+	//wc.hIcon = (HICON)LoadImage(hInstance, WINDOW_ICON_PATH, IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+	wc.hIcon = NULL;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = NULL;

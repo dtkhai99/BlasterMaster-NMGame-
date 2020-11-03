@@ -12,6 +12,7 @@ public:
 	virtual void Render() override;
 
 private:
-	int tilemap[17000];
-	int tileset[150];
+	//int tilemap[17000];
+	//int tileset[150];
+	int gunner;
 };

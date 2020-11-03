@@ -55,7 +55,7 @@ void TextureDatabase::ReadDataFromFile(LPCWSTR filePath)
 			std::wstring wideString = std::wstring(temp.begin(), temp.end());
 			texturePath = wideString.c_str();
 
-			LoadTextureFromPath(id, columns, rows, size, texturePath);
+			LoadTextureFromPath(id, columns, rows, texturePath);
 		}
 		input.close();
 	}
@@ -65,7 +65,6 @@ void TextureDatabase::ReadDataFromFile(LPCWSTR filePath)
 void TextureDatabase::LoadTextureFromPath(TextureID id,
 											unsigned int columns,
 											unsigned int rows,
-											unsigned int size,
 											LPCWSTR texturePath)
 {
 	LPDIRECT3DTEXTURE9 texture = nullptr;
@@ -106,7 +105,9 @@ void TextureDatabase::LoadTextureFromPath(TextureID id,
 	textureData.texture = texture;
 	textureData.columns = columns;
 	textureData.rows = rows;
-	textureData.size = size;
+	textureData.size_width = info.Width / columns;
+	textureData.size_height = info.Height / rows;
+
 
 	mDatabase.emplace(id, std::make_shared<TextureData>(textureData));
 

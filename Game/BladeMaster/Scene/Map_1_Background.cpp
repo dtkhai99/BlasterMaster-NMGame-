@@ -2,6 +2,7 @@
 #include "../Core/Coordinator.h"
 #include "../Component/PositionComponent.h"
 #include "../Component/SpriteComponent.h"
+#include "../Component/AnimationComponent.h"
 #include "../System/GraphicSystem.h"
 #include "../TextureDatabase.h"
 #include <fstream>
@@ -11,8 +12,39 @@ extern Coordinator coordinator;
 Map_1_Background::Map_1_Background(short id)
 {
     this->id = id;
-	
-	Sprite sp[150];
+
+	TextureDatabase* textureDb = TextureDatabase::GetInstance();
+	textureDb->LoadTextureFromPath(GUNNER, 4, 1, L"Resources/Gunner.png");
+
+	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
+
+	Position posTile;
+	Animation ani;
+	gunner = coordinator.CreateEntity();
+	posTile.x = 16;
+	posTile.y = 16;
+	coordinator.AddComponent(gunner, posTile, ComponentType::Position);
+
+	ani.textureID = GUNNER;
+	ani.delayValue = 100;
+	ani.isFinished = false;
+	State goLeft;
+	goLeft.endFrame = 1;
+	goLeft.startFrame = 0;
+	goLeft.isLoopable = true;
+
+	State goRight;
+	goRight.endFrame = 3;
+	goRight.startFrame = 2;
+	goRight.isLoopable = true;
+	ani.stateDictionary.emplace(StateID::Go_Left, goLeft);
+	ani.stateDictionary.emplace(StateID::Go_Right, goRight);
+	ani.currentState = StateID::Go_Left;
+	ani.currentFrame = 0;
+	coordinator.AddComponent(gunner, ani, ComponentType::Animation);
+
+	graphicSystem->AddEntity(gunner);
+	/*Sprite sp[150];
 	TextureDatabase * textureDb = TextureDatabase::GetInstance();
 	textureDb->LoadTextureFromPath(BRICK, 12, 12, 16, L"lvl2_side.png");
 
@@ -84,17 +116,21 @@ Map_1_Background::Map_1_Background(short id)
 		}
 	}
 
-	inFile.close();
+	inFile.close();*/
+
+
 }
 
 void Map_1_Background::Update(DWORD dt)
 {
+	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
+	graphicSystem->Update();
 }
 
 void Map_1_Background::Render()
 {
 	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
-	graphicSystem->SpriteRender();
+	graphicSystem->AnimationRender();
 }
 
 
