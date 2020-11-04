@@ -1,5 +1,5 @@
 #pragma once
-#include "Command.h"
+#include "Core/Command.h"
 
 class SwitchModeCommand : public Command {
     void execute();

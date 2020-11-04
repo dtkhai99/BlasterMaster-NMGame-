@@ -1,5 +1,5 @@
 #pragma once
 #include "Core/Command.h"
-class WeaponSelectCommand : public Command {
+class GoLeftExteriorCommand : public Command {
     void execute();
 };
