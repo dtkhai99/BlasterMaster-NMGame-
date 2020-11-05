@@ -25,7 +25,7 @@ struct SpriteData {
 class SpriteDatabase
 {
 public:
-	void AddSprite(TextureID textureID, RECT rect, unsigned int count);
+	void AddSprite(TextureID textureID, RECT rect,unsigned int count);
 	static SpriteDatabase* GetInstance();
 	int GetSpriteID(unsigned int id);
 	RECT GetRECT(unsigned int id);
