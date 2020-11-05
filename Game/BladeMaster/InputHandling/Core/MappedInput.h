@@ -1,7 +1,7 @@
 #pragma once
 
 struct MappedInput {
-  BYTE  keyStates[256];
+  //BYTE  keyStates[256];
   
   //Assumed all key is up
   //True - key is down

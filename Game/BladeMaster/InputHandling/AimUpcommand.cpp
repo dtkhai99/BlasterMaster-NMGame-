@@ -1,4 +1,4 @@
 #include "AimUpcommand.h"
-void AimUpcommand::execute() {
+void AimUpCommand::execute() {
 
 }

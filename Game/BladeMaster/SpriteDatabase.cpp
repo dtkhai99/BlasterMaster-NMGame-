@@ -1,6 +1,6 @@
 #include "SpriteDatabase.h"
 
-void SpriteDatabase::AddSprite(TextureID textureID, RECT rect, unsigned int count)
+void SpriteDatabase::AddSprite(TextureID textureID, RECT rect,unsigned int count)
 {
 	SpriteData spritedata;
 

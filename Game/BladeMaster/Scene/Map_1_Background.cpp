@@ -3,18 +3,21 @@
 #include "../Component/PositionComponent.h"
 #include "../Component/SpriteComponent.h"
 #include "../Component/AnimationComponent.h"
+#include "../SpriteDatabase.h"
 #include "../System/GraphicSystem.h"
 #include "../TextureDatabase.h"
 #include <fstream>
 #include <iostream>
 
+
 extern Coordinator coordinator;
+
 Map_1_Background::Map_1_Background(short id)
 {
     this->id = id;
 
-	TextureDatabase* textureDb = TextureDatabase::GetInstance();
-	textureDb->LoadTextureFromPath(GUNNER, 4, 1, L"Resources/Gunner.png");
+	/*TextureDatabase* textureDb = TextureDatabase::GetInstance();
+	textureDb->LoadTextureFromPath(GUNNER, 4, 1, L"Resources/Worms.png");
 
 	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
 
@@ -26,7 +29,7 @@ Map_1_Background::Map_1_Background(short id)
 	coordinator.AddComponent(gunner, posTile, ComponentType::Position);
 
 	ani.textureID = GUNNER;
-	ani.delayValue = 100;
+	ani.delayValue = 1000;
 	ani.isFinished = false;
 	State goLeft;
 	goLeft.endFrame = 1;
@@ -43,28 +46,35 @@ Map_1_Background::Map_1_Background(short id)
 	ani.currentFrame = 0;
 	coordinator.AddComponent(gunner, ani, ComponentType::Animation);
 
-	graphicSystem->AddEntity(gunner);
-	/*Sprite sp[150];
+	graphicSystem->AddEntity(gunner);*/
+	
+	//RECT area;
+	Sprite sp[150];
 	TextureDatabase * textureDb = TextureDatabase::GetInstance();
-	textureDb->LoadTextureFromPath(BRICK, 12, 12, 16, L"lvl2_side.png");
+	textureDb->LoadTextureFromPath(BRICK, 12, 12, L"lvl2_side.png");
 
 	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
+
+	SpriteDatabase* spriteDb = SpriteDatabase::GetInstance();
 
 	int count = 0;
 	for (int i = 0; i < 12; i++)
 	{
 		for (int j = 0; j < 12; j++)
 		{
-			tileset[count] = coordinator.CreateEntity();
+			//tileset[count] = coordinator.CreateEntity();
 
 
-			sp[count].textureID = BRICK;
+			//sp[count].textureID = BRICK;
 			sp[count].area.left = j * 16;
 			sp[count].area.top = i * 16;
 			sp[count].area.right = j * 16 + 16;
 			sp[count].area.bottom = i * 16 + 16;
-			coordinator.AddComponent(tileset[count], sp[count], ComponentType::Sprite);
+			//coordinator.AddComponent(tileset[count], sp[count], ComponentType::Sprite);
+
+			spriteDb->AddSprite(BRICK, sp[count].area, count);
 			count++;
+
 		}
 	}
 
@@ -89,11 +99,12 @@ Map_1_Background::Map_1_Background(short id)
 	{
 		for (int i = 0; i < 144; i++)
 		{
-			if (number == tileset[i])
+			if (number == spriteDb->GetSpriteID(number))
 			{
 				tilemap[tempcount] = coordinator.CreateEntity();
 
-				spriteTile[tempcount] = coordinator.GetComponent<Sprite>(tileset[i], ComponentType::Sprite);
+				spriteTile[tempcount].textureID = BRICK;
+				spriteTile[tempcount].area = spriteDb->GetRECT(number);
 				coordinator.AddComponent(tilemap[tempcount], spriteTile[tempcount], ComponentType::Sprite);
 
 				posTile[tempcount].x = colNumber * 16;
@@ -116,9 +127,9 @@ Map_1_Background::Map_1_Background(short id)
 		}
 	}
 
-	inFile.close();*/
+	inFile.close();
 
-
+	
 }
 
 void Map_1_Background::Update(DWORD dt)
@@ -130,7 +141,7 @@ void Map_1_Background::Update(DWORD dt)
 void Map_1_Background::Render()
 {
 	std::shared_ptr<GraphicSystem> graphicSystem = coordinator.GetSystem<GraphicSystem>(SystemType::Graphic);
-	graphicSystem->AnimationRender();
+	graphicSystem->SpriteRender();
 }
 
 

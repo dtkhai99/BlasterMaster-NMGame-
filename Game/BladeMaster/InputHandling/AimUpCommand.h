@@ -1,5 +1,5 @@
 #pragma once
 #include "Core/Command.h"
-class AimUpcommand : public Command {
+class AimUpCommand : public Command {
     void execute();
 };

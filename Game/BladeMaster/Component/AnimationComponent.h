@@ -25,6 +25,7 @@ enum class StateID {
 	Go_Left,
 	Go_Right
 };
+
 struct State {
 	unsigned int startFrame;
 	unsigned int endFrame;
