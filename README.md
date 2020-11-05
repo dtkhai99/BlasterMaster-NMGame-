@@ -2,7 +2,7 @@
 
 # TODO:
 - ECS framework                 [x]
-- Input : Keyboard              [ ]
+- Input : Keyboard              [x]
 - Sắp xếp lại file              [x]
 - Thêm SceneManager + Scene     [x]
 - Thêm tính năng Event          [x]
@@ -12,7 +12,7 @@
 - Animation                     [x]
 - Grid                          [ ]
 - Camera                        [ ]
-- Map                           [ ]
+- Map                           [x]
 - Player                        [ ]
 - Các nhân vật khác (trừ boss)  [ ]
 - Item                          [ ]
