@@ -48,7 +48,7 @@ Map_1_Background::Map_1_Background(short id)
 
 	graphicSystem->AddEntity(gunner);*/
 	
-	//RECT area;
+	RECT area;
 	Sprite sp[150];
 	TextureDatabase * textureDb = TextureDatabase::GetInstance();
 	textureDb->LoadTextureFromPath(BRICK, 12, 12, L"lvl2_side.png");
@@ -62,26 +62,18 @@ Map_1_Background::Map_1_Background(short id)
 	{
 		for (int j = 0; j < 12; j++)
 		{
-			//tileset[count] = coordinator.CreateEntity();
+			spriteDb->AddSprite(BRICK);
 
+			sp[count].textureID = BRICK;
+			sp[count].spriteID = count;
 
-			//sp[count].textureID = BRICK;
-			sp[count].area.left = j * 16;
-			sp[count].area.top = i * 16;
-			sp[count].area.right = j * 16 + 16;
-			sp[count].area.bottom = i * 16 + 16;
-			//coordinator.AddComponent(tileset[count], sp[count], ComponentType::Sprite);
-
-			spriteDb->AddSprite(BRICK, sp[count].area, count);
 			count++;
-
 		}
 	}
 
 	int number;
 	int tempcount = 0;
 	Position posTile[17000];
-	Sprite spriteTile[17000];
 	int rowNumber = 0;
 	int colNumber = 0;
 
@@ -99,13 +91,11 @@ Map_1_Background::Map_1_Background(short id)
 	{
 		for (int i = 0; i < 144; i++)
 		{
-			if (number == spriteDb->GetSpriteID(number))
+			if (number == sp[number].spriteID)
 			{
-				tilemap[tempcount] = coordinator.CreateEntity();
+				tilemap[tempcount] = coordinator.CreateEntity();	
 
-				spriteTile[tempcount].textureID = BRICK;
-				spriteTile[tempcount].area = spriteDb->GetRECT(number);
-				coordinator.AddComponent(tilemap[tempcount], spriteTile[tempcount], ComponentType::Sprite);
+				coordinator.AddComponent(tilemap[tempcount], sp[number], ComponentType::Sprite);
 
 				posTile[tempcount].x = colNumber * 16;
 				posTile[tempcount].y = rowNumber * 16;
@@ -114,8 +104,6 @@ Map_1_Background::Map_1_Background(short id)
 				colNumber++;
 
 				tempcount++;
-
-
 
 				break;
 			}

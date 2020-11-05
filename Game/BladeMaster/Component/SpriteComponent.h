@@ -13,6 +13,5 @@
 */
 struct Sprite {
 	unsigned int textureID;
-	//unsigned int spriteID;
-	RECT area;
+	unsigned int spriteID;
 };

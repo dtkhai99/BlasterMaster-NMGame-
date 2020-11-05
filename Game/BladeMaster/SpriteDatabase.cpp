@@ -1,16 +1,36 @@
 #include "SpriteDatabase.h"
+#include "Debug.h"
+#include "TextureDatabase.h"
 
-void SpriteDatabase::AddSprite(TextureID textureID, RECT rect,unsigned int count)
+void SpriteDatabase::AddSprite(short textureID)
 {
-	SpriteData spritedata;
+	/*SpriteData spritedata;
 
-	spritedata.SpriteID = textureID * 1000 + count;
 	spritedata.area.left = rect.left;
 	spritedata.area.top = rect.top;
 	spritedata.area.right = rect.right;
 	spritedata.area.bottom = rect.bottom;
 
-	mSpriteData[textureID].push_back(spritedata);
+	mSpriteData[textureID].push_back(spritedata);	*/
+
+	TextureDatabase* textureDb = TextureDatabase::GetInstance();
+	std::shared_ptr<TextureData> texture = textureDb->GetTexture(textureID);
+	std::vector<SpriteData> sprites;
+	for (int i = 0; i < texture->rows; i++)
+	{
+		for (int j = 0; j < texture->columns; j++)
+		{
+			SpriteData rect;
+			rect.area.left = j * texture->size_width;
+			rect.area.top = i * texture->size_height;
+			rect.area.right = j * texture->size_width + texture->size_width;
+			rect.area.bottom = i * texture->size_height + texture->size_height;
+
+			sprites.push_back(rect);
+		}
+	}
+
+	mSpriteData.emplace(textureID, sprites);
 
 }
 
@@ -21,31 +41,14 @@ SpriteDatabase* SpriteDatabase::GetInstance()
 	return __instance;
 }
 
-int SpriteDatabase::GetSpriteID(unsigned int id)
+
+RECT SpriteDatabase::GetSprite(short textureID,unsigned int spriteID)
 {
-	for (auto& ell : mSpriteData)
+	if (mSpriteData.find(textureID) != mSpriteData.end()) 
 	{
-		for (auto& ell2 : ell.second)
-		{
-			if (ell2.SpriteID == id)
-			{
-				return ell2.SpriteID;
-			}
-		}
+		return mSpriteData.at(textureID)[spriteID].area;
 	}
-	
+	DebugOut(L"Texture id %d not found \n", textureID);
+	return RECT();
 }
 
-RECT SpriteDatabase::GetRECT(unsigned int id)
-{
-	for (auto& ell : mSpriteData)
-	{
-		for (auto& ell2 : ell.second)
-		{
-			if (ell2.SpriteID == id)
-			{
-				return ell2.area;
-			}
-		}
-	}
-}

@@ -2,7 +2,6 @@
 #include <map>
 #include <vector>
 #include <d3d9.h>
-#include "TextureDatabase.h"
 /*
 						|	index | left  | top  |  right  |  bottom  |
 				mapping	|	 1	  |	16	|	0  |	16	 |	16		|
@@ -19,17 +18,15 @@
 	Question: Should it be use for animation?
 */
 struct SpriteData {
-	unsigned int SpriteID;
 	RECT area;
 };
 class SpriteDatabase
 {
 public:
-	void AddSprite(TextureID textureID, RECT rect,unsigned int count);
+	void AddSprite(short textureID);
 	static SpriteDatabase* GetInstance();
-	int GetSpriteID(unsigned int id);
-	RECT GetRECT(unsigned int id);
+	RECT GetSprite(short textureID,unsigned int spriteID);
 private:
-	std::map<TextureID, std::vector<SpriteData>> mSpriteData;
+	std::map<short, std::vector<SpriteData>> mSpriteData;
 	static SpriteDatabase* __instance;
 };
