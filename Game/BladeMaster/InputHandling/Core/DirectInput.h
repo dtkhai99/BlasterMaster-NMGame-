@@ -1,6 +1,5 @@
 #pragma once
 #include<dinput.h>
-#include "InputContext.h"
 
 //This is first layer in Input Handling System
 /*
@@ -14,6 +13,7 @@
 #define DIRECTINPUT_VERSION 0x0800
 #define KEYBOARD_BUFFER_SIZE 1024
 
+class InputContext; //Forward Declaration
 class DirectInput
 {
 public:

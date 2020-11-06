@@ -22,15 +22,12 @@ WARNING: This one file example has a hell LOT of *sinful* programming practices
 #include "Engine.h"
 #include "Debug.h"
 #include "Core/Coordinator.h"
-#include"Component/PositionComponent.h"
-#include"Component/SpriteComponent.h"
 #include "System/GraphicSystem.h"
 #include "TextureDatabase.h"
 #include "EventHandler/EventHandling.h"
 #include "Scene/SceneManager.h"
 #include "SpriteDatabase.h"
-#include <iostream>
-#include <fstream>
+#include "InputHandling/Core/DirectInput.h"
 
 using namespace std;
 
@@ -57,8 +54,10 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 
-void LoadResource() 
+void LoadResource(HWND hWnd)
 {
+	DirectInput * input = DirectInput::GetInstance();
+	input->InitKeyboard(hWnd);
 
 	sceneManager = SceneManager::getInstance();
 	sceneManager->AddScene(0);
@@ -71,7 +70,10 @@ void LoadResource()
 	IMPORTANT: no render-related code should be used inside this function.
 */
 void Update(DWORD dt) {
+	DirectInput * input = DirectInput::GetInstance();
+	input->ProcessKeyboard();
 	sceneManager->Update(dt);
+
 }
 
 /*
@@ -79,7 +81,7 @@ void Update(DWORD dt) {
 	IMPORTANT: world status must NOT be changed during rendering
 */
 
-void Render() 
+void Render()
 {
 	LPDIRECT3DDEVICE9 d3ddv = engine->GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 bb = engine->GetBackBuffer();
@@ -111,8 +113,8 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.hInstance = hInstance;
 
-	//Try this to see how the debug function prints out file and line 
-	//wc.hInstance = (HINSTANCE)-100; 
+	//Try this to see how the debug function prints out file and line
+	//wc.hInstance = (HINSTANCE)-100;
 
 	wc.lpfnWndProc = (WNDPROC)WinProc;
 	wc.cbClsExtra = 0;
@@ -195,9 +197,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (hWnd == 0) return 0;
 	engine = Engine::GetInstance();
 	engine->InitDirectX(hWnd);
-	LoadResource();
 
-	Run();	
+	LoadResource(hWnd);
+
+	Run();
 
 	return 0;
 }

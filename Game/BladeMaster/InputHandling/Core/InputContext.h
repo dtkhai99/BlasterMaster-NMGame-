@@ -13,6 +13,7 @@ class Context;
 typedef struct MappedInput;
 class InputContext {
 public:
+  InputContext();
   void Dispatch(MappedInput &);
 
 private:
@@ -25,5 +26,5 @@ private:
     More information about CoR:
     https://refactoring.guru/design-patterns/chain-of-responsibility
   */
-  std::list<std::unique_ptr<Context>> mListContext;
+  std::list<std::unique_ptr<Context>> mListContexts;
 };

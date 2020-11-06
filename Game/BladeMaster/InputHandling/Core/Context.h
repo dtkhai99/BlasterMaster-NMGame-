@@ -16,4 +16,7 @@
 class Context {
 public:
   virtual bool Handle(MappedInput &) = 0;
+
+public:
+  bool isActive; //We need to track which 
 };
