@@ -28,6 +28,9 @@ void GraphicSystem::SpriteRender()
 	TextureDatabase* textureDb = TextureDatabase::GetInstance();
 	SpriteDatabase* spriteDb = SpriteDatabase::GetInstance();
 	for (EntityID const& entity : mEntityList) {
+		//Check if this entity has Animation component
+		if ((coordinator.GetEntityBitmask(entity) & mRequiredComponents[1]) != mRequiredComponents[0]) continue;
+
 		Sprite& sprite = coordinator.GetComponent<Sprite>(entity, ComponentType::Sprite);
 		Position& position = coordinator.GetComponent<Position>(entity, ComponentType::Position);
 		std::shared_ptr<TextureData> texture = textureDb->GetTexture((TextureID)sprite.textureID);
@@ -44,6 +47,9 @@ void GraphicSystem::AnimationRender()
 	LPD3DXSPRITE spriteHandler = Engine::GetInstance()->GetSpriteHandler();
 	TextureDatabase* textureDb = TextureDatabase::GetInstance();
 	for (EntityID const& entity : mEntityList) {
+		//Check if this entity has Animation component
+		if ((coordinator.GetEntityBitmask(entity) & mRequiredComponents[1]) != mRequiredComponents[1]) continue;
+
 		Animation& animation = coordinator.GetComponent<Animation>(entity, ComponentType::Animation);
 		Position& position = coordinator.GetComponent<Position>(entity, ComponentType::Position);
 		std::shared_ptr<TextureData> texture = textureDb->GetTexture((TextureID)animation.textureID);
@@ -61,6 +67,8 @@ void GraphicSystem::Update()
 {
 	DWORD now = GetTickCount();
 	for (EntityID const& entity : mEntityList) {
+		//Check if this entity has Animation component
+		if ((coordinator.GetEntityBitmask(entity) & mRequiredComponents[1]) != mRequiredComponents[1]) continue;
 		Animation& animation = coordinator.GetComponent<Animation>(entity, ComponentType::Animation);
 
 		if (now - animation.animationCounter > animation.delayValue && animation.isFinished == false) {
